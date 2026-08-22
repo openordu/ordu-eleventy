@@ -258,14 +258,17 @@ module.exports = function(eleventyConfig) {
     "njk", // nunjucks templates
     // include other file types as needed
   ]);
-  // GITHUB PAGES SUBPATH FIX: rewrite hardcoded absolute asset refs
-  // (/js, /css, /assets, /img, /lib) to include the repo subpath in HTML output.
+  // GITHUB PAGES SUBPATH FIX: rewrite ALL hardcoded absolute internal hrefs/srcs
+  // (/about, /docs, /tags/x, /pce/A/, /license, /assets/*, breadcrumb "/" etc.) to
+  // include the repo subpath in HTML output. Skips already-prefixed paths, a bare
+  // protocol-relative `//host/...`, and fragments (which have no leading slash).
   eleventyConfig.addTransform("prefixAssets", function(content) {
     const SUBPATH = "/ordu-eleventy/";
-    // Skip refs already prefixed (avoid double prefix)
+    // Match (href|src)=" then a single leading slash, then any non-quote path.
+    // Negative lookaheads: not already subpath-prefixed, and not protocol-relative (//...).
     return content.replace(
-      /((?:href|src)=")\/(?!ordu-eleventy\/)(js|css|assets|img|lib)\//g,
-      `$1${SUBPATH}$2/`
+      /((?:href|src)=")\/(?!\/)(?!ordu-eleventy\/)([^"]*)/g,
+      `$1${SUBPATH}$2`
     );
   });
   // Add a filter using the Config API
