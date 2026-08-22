@@ -40,9 +40,9 @@ index: 2
 [About page using relative path](../about)
 ```
 
-[![A picture of a cat](https://placekitten.com/200/300)](https://en.wikipedia.org/wiki/Cat)
+[![A picture of a cat](https://picsum.photos/200/300)](https://en.wikipedia.org/wiki/Cat)
 
 
 ```md
-[![A picture of a cat](https://placekitten.com/200/300)](https://en.wikipedia.org/wiki/Cat)
+[![A picture of a cat](https://picsum.photos/200/300)](https://en.wikipedia.org/wiki/Cat)
 ```
