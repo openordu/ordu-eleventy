@@ -57,9 +57,9 @@ tracker.
 Comments and bug reports from anyone are welcome.
 
 Please join our discussion lists on
-[Facebook](www.facebook.com/groups/openordu/).
+[Facebook](https://www.facebook.com/groups/openordu/).
 
-You can also follow us on [Twitter](twitter.com/openordu)(not working rn).
+You can also follow us on [Twitter](https://twitter.com/openordu)(not working rn).
 
 ## What Does Public Mean?
 Public means:
@@ -71,7 +71,7 @@ Public means:
 1. Not free to change these restrictions in copies, distributions, uses,
    modifications, or contributions.
 
-Check out the [License](license) to find out. There's a summary section.
+Check out the [License](/ordu-eleventy/license/) to find out. There's a summary section.
 
 ## Why isn't Wikipedia Good?
 
