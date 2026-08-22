@@ -92,4 +92,4 @@ Result:
 
 ## Or Just Use github
 
-As an alternative you can use the website based editor which is a graphical git client over at the [Github Project](https://gitlab.com/openordu/)
+As an alternative you can use the website based editor which is a graphical git client over at the [Github Project](https://github.com/openordu)
