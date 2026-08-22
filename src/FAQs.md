@@ -77,5 +77,5 @@ subscribe to our Activity, you must have an account on a service which
 understands Activity pub. Once you are, you can subscribe to any Activity Pub
 stream, including ours. To get started, visit out [Mastodon](/mastodon) server.
 During the sign up process, you'll be presented with an opportunity to subscribe
-to [@Celtibot](http://mastodon.celticpaganism.org/@Celtibot) who publishes the updates.
+to @Celtibot who publishes the updates.
 
