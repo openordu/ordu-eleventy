@@ -258,6 +258,16 @@ module.exports = function(eleventyConfig) {
     "njk", // nunjucks templates
     // include other file types as needed
   ]);
+  // GITHUB PAGES SUBPATH FIX: rewrite hardcoded absolute asset refs
+  // (/js, /css, /assets, /img, /lib) to include the repo subpath in HTML output.
+  eleventyConfig.addTransform("prefixAssets", function(content) {
+    const SUBPATH = "/ordu-eleventy/";
+    // Skip refs already prefixed (avoid double prefix)
+    return content.replace(
+      /((?:href|src)=")\/(?!ordu-eleventy\/)(js|css|assets|img|lib)\//g,
+      `$1${SUBPATH}$2/`
+    );
+  });
   // Add a filter using the Config API
   eleventyConfig.addWatchTarget("./src/scss/");
   eleventyConfig.setBrowserSyncConfig({
@@ -277,8 +287,9 @@ module.exports = function(eleventyConfig) {
     }).toFormat('yyyy-LL-dd');
   });
   return {
+    pathPrefix: "/ordu-eleventy/",
     metadata: {
-      url: "https://celticpaganism.org", // Your website URL
+      url: "https://openordu.github.io/ordu-eleventy/", // Your website URL
     },
     dir: {
       input: "src",
