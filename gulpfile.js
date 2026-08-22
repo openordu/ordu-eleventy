@@ -39,10 +39,27 @@ gulp.task('minify-css', () => {
     .pipe(browserSync.stream());
 });
 
-// minifies HTML
+// minifies HTML. PCE volume pages are ~400KB each (they embed the full
+// A-Z navigator sidebar); html-minifier is quadratic on large HTML and the
+// 3800-page PCE tree would take hours. Size-gate: minify in-place only files
+// under 250KB, skip the giant PCE pages so the build completes. GAF-223.
+const through2 = require('through2');
+const minifyHtml = require('html-minifier').minify;
+const MINIFY_MAX_BYTES = 250 * 1024;
 gulp.task('minify-html', () => {
   return gulp.src('public/**/*.html')
-    .pipe(htmlmin({ collapseWhitespace: true, removeComments: true }))
+    .pipe(through2.obj(function (file, enc, cb) {
+      if (file.isBuffer() && file.contents.length <= MINIFY_MAX_BYTES) {
+        try {
+          const out = minifyHtml(file.contents.toString('utf8'),
+            { collapseWhitespace: true, removeComments: true });
+          file.contents = Buffer.from(out);
+        } catch (e) {
+          return cb(e);
+        }
+      }
+      cb(null, file);
+    }))
     .pipe(gulp.dest('public'));
 });
 
