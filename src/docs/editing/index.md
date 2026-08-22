@@ -29,4 +29,3 @@ _This text is italicized_
 ```
 
 This set of pages document a bit about the Markdown supported by this project.
-You can also check out this [Full Guide](https://vuepress-theme-hope.github.io/v2/guide/get-started/markdown.html#align).

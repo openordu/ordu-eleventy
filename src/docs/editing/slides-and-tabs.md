@@ -109,5 +109,3 @@ npm i -D onchange
 ```
 
 - [View Details](https://github.com/openordu/markdown-it-ordu)
-
-<!-- - [View Detail](https://theme-hope.vuejs.press/guide/markdown/code-tabs.html) -->

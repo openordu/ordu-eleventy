@@ -70,6 +70,4 @@ description: Description of this page
 You can control quite a great deal about the display of a single page using the
 following references:
 
-[Informational Frontmatter](https://vuepress-theme-hope.github.io/v2/config/frontmatter/info.html)
-[Layout Frontmatter](https://vuepress-theme-hope.github.io/v2/config/frontmatter/layout.html)
-[Plugin Frontmatter](https://vuepress-theme-hope.github.io/v2/config/frontmatter/plugins.html) -->
+-->
