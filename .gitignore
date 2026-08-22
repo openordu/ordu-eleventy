@@ -9,3 +9,6 @@ yarn-error.log
 *.save
 .history
 public
+# vendored PCE letter volumes (fetched from github.com/openordu/pce at build)
+src/pce/[A-Z]/
+src/pce/.entries/

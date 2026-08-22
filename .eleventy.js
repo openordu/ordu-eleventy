@@ -47,6 +47,55 @@ const removeAccents = (str) => {
   return str.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
 }
 
+// WeakSet-free memo for the keyBy nunjucks filter below: caches the url-map
+// per collection ARRAY object so it is built once and reused across all page
+// renders (O(n^2) -> O(n) for the PCE collection). GAF-223 perf blocker.
+const memoKeyBy = new Map();            // sig -> url-map
+// Memo for findItemByUrl: resolve each (nav-array, url) once.
+const memoFindByUrl = new Map();        // sig -> Map(url -> result)
+// Memo for the eleventyNavigation nav-tree build: the sidebar + prevnext
+// snippets call `collections.all | eleventyNavigation` on EVERY page render,
+// and each call recurses findNavigationEntries across the whole (now ~1965
+// item) collection -> O(n^2) interpreted nunjucks that stalls the build at
+// 100% CPU with zero output. GAF-223 perf blocker.
+//
+// NOTE ON KEYING: the base collections (`collections.all`) is a FRESH array
+// wrapper on every template render (Eleventy's getAllSorted() rebuilds it), so
+// WeakMap-keying on the array OBJECT identity NEVER hits after the first page.
+// That earlier memo was demonstrably ineffective (every nav-on build OOM'd).
+// The array's ITEMS are stable (same page objects, same order), so we key the
+// memo on a content signature (length + first item's url + hash) that is
+// identical across the re-created wrappers. Sidebar + prevnext on 1965 pages
+// then reuse ONE built tree instead of 1965.
+
+// contentSignature(collectionArray) -> string stable across fresh wrappers
+// built from the same underlying page set.
+function collSig(arr) {
+  if (!arr || !arr.length) return "empty";
+  let h = 0;
+  const n = Math.min(arr.length, 8);         // cheap robustness, order-aware
+  for (let i = 0; i < n; i++) {
+    const u = arr[i] && arr[i].data && arr[i].data.page && arr[i].data.page.url;
+    h = ((h * 31) | 0) + (u ? u.length : 0) + (u ? u.charCodeAt(0) : 0);
+  }
+  return arr.length + ":" + (h & 0x7fffffff);
+}
+
+// Mutate the plugin module's exported findNavigationEntries BEFORE addPlugin so
+// the filter bound at plugin registration time IS the memoized version. A
+// re-register via eleventyConfig.addFilter does NOT override the bound filter.
+const navCore = require("@11ty/eleventy-navigation/eleventy-navigation");
+const rawNavFind = navCore.findNavigationEntries;
+const memoNavTree = new Map();          // sig -> built tree
+navCore.findNavigationEntries = function(nodes, key) {
+  if (key) return rawNavFind(nodes, key);           // children recursion (cheap)
+  const sig = collSig(nodes);
+  if (memoNavTree.has(sig)) return memoNavTree.get(sig);
+  const tree = rawNavFind(nodes, key);
+  memoNavTree.set(sig, tree);
+  return tree;
+};
+
 module.exports = function(eleventyConfig) {
   eleventyConfig.setDataDeepMerge(true);
   eleventyConfig.addPlugin(eleventyNavigationPlugin);
@@ -54,10 +103,18 @@ module.exports = function(eleventyConfig) {
   // eleventyConfig.addPlugin(eleventyPluginSyntaxHighlighter);
   eleventyConfig.addNunjucksAsyncFilter('fileModifiedDate', fileModifiedDate());
   eleventyConfig.addNunjucksFilter('keyBy', function(array, key) {
-    return array.reduce(function(result, item) {
-      result[item.data[key]] = item;
-      return result;
+    // Memoize by content signature (NOT array object identity — Eleventy hands
+    // a fresh `collections.all` wrapper per render, so a WeakMap on the array
+    // object never hits). Reuse the one url-map built for this page set across
+    // all ~1965 page renders instead of a reduce per page (O(n^2) -> O(n)).
+    const sig = collSig(array);
+    if (memoKeyBy.has(sig)) return memoKeyBy.get(sig);
+    var result = array.reduce(function(memo, item) {
+      memo[item.data[key]] = item;
+      return memo;
     }, {});
+    memoKeyBy.set(sig, result);
+    return result;
   });
   eleventyConfig.addFilter("slugit", function(value) {
     return slugify(String(value), {
@@ -181,6 +238,12 @@ module.exports = function(eleventyConfig) {
     if (!array) {
       return;
     }
+    // Memoize per content signature (see keyBy note): resolve each url once
+    // instead of a recursive walk per page (O(n^2) on the PCE collection).
+    const sig = collSig(array);
+    let m = memoFindByUrl.get(sig);
+    if (!m) { m = new Map(); memoFindByUrl.set(sig, m); }
+    if (m.has(url)) return m.get(url);
     // Recursive function to search through the array and its children
     function search(array) {
       for (let i = 0; i < array.length; i++) {
@@ -195,8 +258,9 @@ module.exports = function(eleventyConfig) {
         }
       }
     }
-
-    return search(array);
+    const found = search(array);
+    m.set(url, found);
+    return found;
   });
 
   // Create a collection for each category
@@ -225,6 +289,13 @@ module.exports = function(eleventyConfig) {
     const tagsObject = {}
     collection.getAll().forEach(item => {
         if (!item.data.tags) return;
+        // Exclude PCE entry pages: they carry their own per-entry taxonomy
+        // (5189 singleton tags) that is irrelevant to the site-wide tag cloud
+        // and exploded tags.njk into ~5190 pages, OOM-ing the build on this
+        // 11GB box. PCE letter + entry pages build independently; only the
+        // site-wide /tags/* overlaps here. GAF-223 memory fix.
+        const ip = item.inputPath || "";
+        if (ip.indexOf("/pce/") !== -1) return;
         item.data.tags
           .map(tag => slugify(String(tag).trim(), {
             lower: false,

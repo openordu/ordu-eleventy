@@ -1,16 +1,18 @@
-const fs = require('fs').promises;
+const fs = require('fs');
+const fsp = require('fs').promises;
 const path = require('path');
-const simpleGit = require('simple-git/promise');  // use the Promise version of simple-git
-const fse = require('fs-extra');  // use fs-extra for additional file system operations
-const os = require('os');  // use os module to create temporary directories
+const os = require('os');
+const { execFile } = require('child_process');
+const { promisify } = require('util');
+const execFileP = promisify(execFile);
 
-// recursively scan directories for .json files
+// rec()ssively scan directories for .json files
 async function scanDir(directory) {
-  const files = await fs.readdir(directory);
+  const files = await fsp.readdir(directory);
 
   for (let file of files) {
     const filePath = path.join(directory, file);
-    const stats = await fs.stat(filePath);
+    const stats = await fsp.stat(filePath);
 
     if (stats.isDirectory()) {
       await scanDir(filePath);
@@ -22,12 +24,11 @@ async function scanDir(directory) {
 
 // process a .json file
 async function processJsonFile(file) {
-  const data = JSON.parse(await fs.readFile(file));
+  const data = JSON.parse(await fsp.readFile(file));
 
   // Check for 'tags' key and that it is an array with at least one value
   if (data.tags && Array.isArray(data.tags) && data.tags.length > 0) {
     if (data.vcsurl) {
-      const git = simpleGit();
       const directory = path.dirname(file);
 
       // If vcsbranch is specified, use it. Otherwise default to 'main'
@@ -35,27 +36,32 @@ async function processJsonFile(file) {
 
       try {
         // create a temporary directory
-        const tmpDir = await fs.mkdtemp(path.join(os.tmpdir(), 'clone-'));
+        const tmpDir = await fsp.mkdtemp(path.join(os.tmpdir(), 'clone-'));
 
-        // clone into the temporary directory
-        await git.clone(data.vcsurl, tmpDir, ['-b', branch]);
+        // clone into the temporary directory (depth 1, single branch)
+        await execFileP('git', ['clone', '--depth', '1', '--branch', branch, data.vcsurl, tmpDir]);
 
         // get the files in the temporary directory
-        const files = await fs.readdir(tmpDir);
+        const files = await fsp.readdir(tmpDir);
 
-        // filter out dotfiles
-        const nonDotfiles = files.filter(file => !file.startsWith('.'));
-
-        // move each non-dotfile to the target directory
-        for (let nonDotfile of nonDotfiles) {
-          const srcPath = path.join(tmpDir, nonDotfile);
-          const destPath = path.join(directory, nonDotfile);
-          await fse.move(srcPath, destPath, { overwrite: true });
+        // copy ONLY top-level subdirectories (letter volumes A..Y); skip
+        // dwarf dotfiles and apex files (.gitignore, markdown.py, index.sjson).
+        for (const entry of files) {
+          if (entry.startsWith('.')) continue;
+          const srcPath = path.join(tmpDir, entry);
+          const st = await fsp.stat(srcPath);
+          if (!st.isDirectory()) continue;
+          const destPath = path.join(directory, entry);
+          await fsp.cp(srcPath, destPath, { recursive: true, force: true });
         }
 
         console.log(`Successfully cloned ${data.vcsurl} into ${directory}`);
       } catch (err) {
-        console.error(`Failed to clone ${data.vcsurl} into ${directory}:`, err);
+        console.error(`Failed to clone ${data.vcsurl} into ${directory}:`, err.message || err);
+      } finally {
+        try {
+          await fsp.rm(tmpDir, { recursive: true, force: true });
+        } catch (e) { /* best-effort cleanup */ }
       }
     }
   }
