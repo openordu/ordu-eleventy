@@ -4,5 +4,6 @@ module.exports = {
     currentYear: new Date().getFullYear(),
     vcsurl: "https://github.com/openordu/ordu-eleventy",
     vcsbranch: "master",
-    sitemap_enabled: false,
+    url: "https://openordu.github.io/ordu-eleventy",
+    sitemap_enabled: true,
 }

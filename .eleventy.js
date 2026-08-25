@@ -91,6 +91,7 @@ module.exports = function(eleventyConfig) {
   eleventyConfig.addPassthroughCopy('./src/main.css');
   eleventyConfig.addPassthroughCopy('./src/lib/main.js');
   eleventyConfig.addPassthroughCopy('./src/assets');
+  eleventyConfig.addPassthroughCopy('./src/robots.txt');
 
   // for markdown extensions
   let options = {
