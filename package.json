@@ -84,7 +84,8 @@
     "node-sass": "^7.0.1",
     "npm-run-all": "^4.1.5",
     "onchange": "^7.0.2",
-    "react-is": "^18.0.0"
+    "react-is": "^18.0.0",
+    "tailwindcss": "^3.4.19"
   },
   "repository": {
     "type": "git",
