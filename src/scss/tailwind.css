@@ -1,0 +1,6 @@
+/* GAF-276 openordu-bootstrap-tailwind-design-gauntlet
+   T6: Tailwind v3 input. Compiled by the gulp 'tailwind' task to
+   dev/css/theme.min.css (the exact path inject-min-css serves). */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;

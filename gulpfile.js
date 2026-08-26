@@ -10,9 +10,26 @@ const imagemin = require('gulp-imagemin');
 const htmlmin = require('gulp-htmlmin');
 var htmlreplace = require('gulp-html-replace');
 var reload      = browserSync.reload;
+var exec        = require('child_process').exec;
 // Configuration file to keep your code DRY
 var cfg = require( './gulpconfig.json' );
 var paths = cfg.paths;
+
+// GAF-276 T6: Tailwind v3 build. Tailwind OWNS theme.min.css (the exact path
+// inject-min-css serves). Produces the minified Tailwind artifact directly via
+// the CLI (--minify), so the sass minify-css glob must EXCLUDE theme.min.css
+// or it would clobber the Tailwind output with the old Bootstrap min.
+gulp.task('tailwind', function (done) {
+  exec(
+    'npx tailwindcss -i src/scss/tailwind.css -c tailwind.config.js -o dev/css/theme.min.css --minify',
+    { cwd: __dirname, maxBuffer: 10 * 1024 * 1024 },
+    function (err, stdout, stderr) {
+      if (err) { console.error('tailwind build failed: ' + stderr); return done(err); }
+      if (stdout) console.log(stdout.trim());
+      done();
+    }
+  );
+});
 
 gulp.task('dist-assets', function (done) {
     gulp.src('./src/js/**.*')
@@ -29,8 +46,10 @@ gulp.task('prod-copy', function (done) {
 });
 
 gulp.task('minify-css', () => {
+  // GAF-276 T6: EXCLUDE theme.min.css — Tailwind's 'tailwind' task owns it.
+  // The sass glob must not re-minify Tailwind's output into theme.min.css.
   return gulp
-    .src('dev/css/*.css')
+    .src(['dev/css/*.css', '!dev/css/theme.min.css'])
     .pipe(cleanCSS({
       compatibility: 'ie8'
     }))

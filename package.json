@@ -9,9 +9,9 @@
   },
   "main": "index.html",
   "scripts": {
-    "build": "npm run clean && npm run clean-prod  && node --max-old-space-size=6144 node_modules/.bin/eleventy && gulp sass && gulp dist-assets && gulp minify-css && gulp prod-copy && gulp inject-min-css && gulp purgecss && gulp minify-html",
-    "quickbuild": "node --max-old-space-size=6144 node_modules/.bin/eleventy && gulp sass && gulp dist-assets && gulp prod-copy",
-    "build-dev": "node --max-old-space-size=6144 node_modules/.bin/eleventy && gulp dist-assets && gulp sass",
+    "build": "npm run clean && npm run clean-prod  && node --max-old-space-size=6144 node_modules/.bin/eleventy && gulp tailwind && gulp sass && gulp dist-assets && gulp minify-css && gulp prod-copy && gulp inject-min-css && gulp purgecss && gulp minify-html",
+    "quickbuild": "node --max-old-space-size=6144 node_modules/.bin/eleventy && gulp tailwind && gulp sass && gulp dist-assets && gulp prod-copy",
+    "build-dev": "node --max-old-space-size=6144 node_modules/.bin/eleventy && gulp dist-assets && gulp tailwind && gulp sass",
     "11ty": "eleventy && gulp inject-css",
     "sync": "gulp browser-sync",
     "watch-dev": "npm run build-dev && npm run sync",
