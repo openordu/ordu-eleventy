@@ -1,6 +1,5 @@
 const { DateTime }                    = require("luxon");
 // const doMarkdownIT                    = require('@digitalocean/do-markdownit');
-const navigationPlugin                = require('@11ty/eleventy-navigation');
 // const pluginMermaid                   = require("@kevingimbel/eleventy-plugin-mermaid");
 const rssPlugin                       = require('@11ty/eleventy-plugin-rss');
 const markdownIt                      = require("markdown-it");
@@ -17,7 +16,17 @@ const markdownItAnchor                = require("markdown-it-anchor");
 const markdownItFootnote              = require("markdown-it-footnote");
 const markdownItContainer             = require("markdown-it-container");
 const markdownItTaskLists             = require("markdown-it-task-lists");
-const eleventyNavigationPlugin        = require("@11ty/eleventy-navigation");
+const EleventyNavigationCore          = require("@11ty/eleventy-navigation/eleventy-navigation.js");
+// PERF (GAF-276 T7b root cause): the eleventyNavigation filter runs
+// findNavigationEntries over its whole `nodes` collection on EVERY invocation.
+// sidebar/breadcrumbs call it with collections.all and prevnext-date calls it
+// with collections.sortedPosts, 3-4x per page across ~3280 pages => ~10k full
+// scans => >11min. The two collection trees are STABLE for the whole build, so
+// cache one tree per distinct collection reference (WeakMap keyed on nodes).
+// Two distinct collections (all / sortedPosts) legitimately produce different
+// trees, so a single unbounded cache would be WRONG — this keys on the exact
+// collection so each tree is computed once and reused byte-identical.
+const _navTreeCache = new WeakMap();
 const markdownItTableOfContents       = require("markdown-it-table-of-contents");
 const markdownItMark                  = require("markdown-it-mark");
 const markdownItQuiz                  = require('markdown-it-quiz');
@@ -49,7 +58,26 @@ const removeAccents = (str) => {
 
 module.exports = function(eleventyConfig) {
   eleventyConfig.setDataDeepMerge(true);
-  eleventyConfig.addPlugin(eleventyNavigationPlugin);
+  // GAF-276 T7b ROOT CAUSE: the eleventy-navigation plugin's filter shadows our
+  // same-name addFilter override (Eleventy 1.0.1, addPlugin filters win the
+  // merge), so the plugin's O(P*N) findNavigationEntries kept running per page.
+  // Fix: do NOT register the plugin; register ONLY our memoized filter. The
+  // templates use only the base `eleventyNavigation` filter (verified grep —
+  // no breadcrumb/toHtml/markdown variants, eleventyComputed.js data is not a
+  // filter use). The nested tree is identical for the whole build (depends only
+  // on the collection reference), so compute it once per distinct collection
+  // (collections.all / collections.sortedPosts are stable refs in Eleventy).
+  // sidebar/breadcrumbs/prevnext call the filter 3-4x/page; ~3280 pages with
+  // the old per-call scan => ~10k full scans => >11min stall. Memoize => seconds.
+  // const EleventyNavigationCore = require(...) is declared at module top.
+  eleventyConfig.addFilter("eleventyNavigation", (nodes) => {
+    if (!_navTreeCache.has(nodes)) {
+      if (nodes && Array.isArray(nodes) && nodes.length > 0) {
+        _navTreeCache.set(nodes, EleventyNavigationCore.findNavigationEntries(nodes));
+      }
+    }
+    return _navTreeCache.get(nodes) || [];
+  });
   eleventyConfig.addFilter("debug", (content) => `${inspect(content)}`);
   // eleventyConfig.addPlugin(eleventyPluginSyntaxHighlighter);
   eleventyConfig.addNunjucksAsyncFilter('fileModifiedDate', fileModifiedDate());
