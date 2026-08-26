@@ -1,0 +1,358 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>OpenOrdú — CelticPaganism.org — Variant 2 · Museum Catalogue</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Work+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --umber:#3c2f24;
+    --umber-2:#4b3a2c;
+    --stone:#e7dfd2;
+    --stone-2:#dcd1bd;
+    --bone:#f4ede0;
+    --ink:#1a1310;
+    --moss:#5e6a3e;
+    --moss-deep:#3f4a24;
+    --brass:#b7902b;
+  }
+  html,body{background:var(--stone);color:var(--ink);}
+  body{
+    font-family:"Spectral","Iowan Old Style",Georgia,serif;
+    font-feature-settings:"onum","kern","liga";
+    -webkit-font-smoothing:antialiased;
+  }
+  .display{font-family:"Spectral",serif;font-weight:500;letter-spacing:-.012em;}
+  .sans{font-family:"Work Sans",ui-sans-serif,system-ui,sans-serif;}
+  .tax{font-family:"Work Sans",sans-serif;font-variant-caps:all-small-caps;letter-spacing:.08em;font-weight:600;}
+  .figures{font-variant-numeric:tabular-nums lining-nums;}
+  .rule{background:rgba(60,47,36,.18);height:1px;}
+  .rule-strong{background:var(--umber);height:1px;}
+  .plate{background:var(--bone);box-shadow:0 1px 0 rgba(60,47,36,.06), 0 30px 44px -34px rgba(60,47,36,.35);transition:transform .5s cubic-bezier(.2,.7,.2,1), box-shadow .5s cubic-bezier(.2,.7,.2,1);will-change:transform;}
+  .plate:hover{transform:translateY(-6px);box-shadow:0 2px 0 rgba(60,47,36,.08), 0 44px 60px -30px rgba(60,47,36,.5);}
+  .btn-primary{background:var(--umber);color:var(--bone);}
+  .btn-primary:hover{background:var(--ink);}
+  .btn-ghost{color:var(--umber);}
+  .btn-ghost:hover{color:var(--moss-deep);}
+  .accession{color:var(--umber-2);}
+  .hero-title{font-size:clamp(3rem,9vw,7rem);line-height:.94;}
+  .brass{color:var(--brass);}
+  .subtle-bg{background:linear-gradient(180deg, var(--stone) 0%, var(--stone-2) 100%);}
+  .darkplate{background:linear-gradient(180deg, #3c2f24 0%, #2a2018 100%);color:var(--bone);}
+  .reveal{opacity:0;transform:translateY(20px);transition:opacity .9s ease, transform .9s ease;}
+  .reveal.in{opacity:1;transform:none;}
+  .reveal-2{opacity:0;transform:translateY(28px);transition:opacity 1s ease .12s, transform 1s ease .12s;}
+  .reveal-2.in{opacity:1;transform:none;}
+  ::selection{background:rgba(60,47,36,.25);}
+  .thumb{background:linear-gradient(135deg, #d7cab1 0%, #b8a685 55%, #7f6a4a 100%);}
+  .thumb-2{background:linear-gradient(135deg, #cfc0a2 0%, #907a56 100%);}
+  .thumb-3{background:linear-gradient(135deg, #b7a683 0%, #63512e 100%);}
+</style>
+</head>
+<body class="min-h-screen">
+
+<!-- NAV -->
+<header class="subtle-bg">
+  <div class="max-w-[1400px] mx-auto px-6 md:px-10 pt-6 pb-5">
+    <div class="flex items-center justify-between gap-4">
+      <a href="#" class="flex items-baseline gap-3">
+        <span class="display text-2xl" style="color:var(--ink)">OpenOrdú</span>
+        <span class="tax text-[.7rem] accession">CelticPaganism.org</span>
+      </a>
+      <nav class="hidden lg:flex items-center gap-6 tax text-sm">
+        <a class="hover:text-[color:var(--moss-deep)]" href="#">Home</a>
+        <a class="hover:text-[color:var(--moss-deep)]" href="#encyclopedia">Encyclopedia</a>
+        <a class="hover:text-[color:var(--moss-deep)]" href="#praxis">Praxis</a>
+        <a class="hover:text-[color:var(--moss-deep)]" href="#">Quiz</a>
+        <a class="hover:text-[color:var(--moss-deep)]" href="#">Blog</a>
+        <a class="hover:text-[color:var(--moss-deep)]" href="#">About</a>
+        <a class="hover:text-[color:var(--moss-deep)]" href="#">Tags</a>
+        <a class="hover:text-[color:var(--moss-deep)]" href="#">Search</a>
+        <a class="hover:text-[color:var(--moss-deep)]" href="#">GitHub</a>
+      </nav>
+      <button id="menu-btn" class="lg:hidden tax text-sm">Menu</button>
+    </div>
+    <div id="menu" class="lg:hidden hidden mt-4 flex flex-wrap gap-x-5 gap-y-2 tax text-sm">
+      <a href="#">Home</a><a href="#encyclopedia">Encyclopedia</a><a href="#praxis">Praxis</a>
+      <a href="#">Quiz</a><a href="#">Blog</a><a href="#">About</a>
+      <a href="#">Tags</a><a href="#">Search</a><a href="#">GitHub</a>
+    </div>
+  </div>
+  <div class="max-w-[1400px] mx-auto px-6 md:px-10"><div class="rule"></div></div>
+</header>
+
+<!-- HERO -->
+<section class="subtle-bg">
+  <div class="max-w-[1400px] mx-auto px-6 md:px-10 py-16 md:py-24">
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 items-end">
+      <div class="lg:col-span-8">
+        <p class="tax accession text-xs mb-6">Est. Collection · Public Celtic Encyclopedia</p>
+        <h1 class="display hero-title" style="color:var(--ink)">CelticPaganism.org</h1>
+        <p class="mt-8 max-w-2xl text-lg md:text-xl leading-relaxed" style="color:var(--umber-2)">
+          An open, collaborative library for the study and practice of Celtic Paganism — encyclopedia, ritual guides, and community.
+        </p>
+        <div class="mt-10 flex flex-wrap gap-3">
+          <a href="#encyclopedia" class="btn-primary tax text-sm px-7 py-4">Browse the Encyclopedia</a>
+          <a href="#praxis" class="btn-ghost tax text-sm px-4 py-4">Explore Praxis →</a>
+        </div>
+      </div>
+      <aside class="lg:col-span-4">
+        <div class="plate p-6">
+          <p class="tax accession text-[.7rem] mb-3">Object of the day · Acc. no. 004.2026</p>
+          <div class="thumb aspect-[4/5] w-full"></div>
+          <p class="display italic mt-5 text-lg leading-snug" style="color:var(--ink)">Votive plaque, Coligny fragment</p>
+          <p class="sans text-[.9rem] mt-1" style="color:var(--umber-2)">Gaulish · c. 200 CE · Bronze</p>
+        </div>
+      </aside>
+    </div>
+  </div>
+  <div class="max-w-[1400px] mx-auto px-6 md:px-10"><div class="rule"></div></div>
+</section>
+
+<!-- STATS -->
+<section>
+  <div class="max-w-[1400px] mx-auto px-6 md:px-10 py-14 md:py-20">
+    <p class="tax accession text-xs mb-10">Catalogue at a glance</p>
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-x-6 gap-y-10">
+      <div class="reveal">
+        <p class="display figures text-6xl md:text-7xl" style="color:var(--umber)" data-count="625">0</p>
+        <p class="tax accession mt-3 text-xs">Encyclopedia entries</p>
+      </div>
+      <div class="reveal">
+        <p class="display figures text-6xl md:text-7xl" style="color:var(--umber)" data-count="7">0</p>
+        <p class="tax accession mt-3 text-xs">Celtic cultures</p>
+      </div>
+      <div class="reveal">
+        <p class="display figures text-6xl md:text-7xl" style="color:var(--umber)" data-count="113">0</p>
+        <p class="tax accession mt-3 text-xs">Ritual guides</p>
+      </div>
+      <div class="reveal">
+        <p class="display text-6xl md:text-7xl" style="color:var(--moss-deep)">Open</p>
+        <p class="tax accession mt-3 text-xs">Source · CC BY-SA</p>
+      </div>
+    </div>
+  </div>
+  <div class="max-w-[1400px] mx-auto px-6 md:px-10"><div class="rule"></div></div>
+</section>
+
+<!-- ENCYCLOPEDIA -->
+<section id="encyclopedia">
+  <div class="max-w-[1400px] mx-auto px-6 md:px-10 py-16 md:py-24">
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 mb-14 items-end reveal">
+      <div class="lg:col-span-6">
+        <p class="tax accession text-xs mb-4">Gallery I · Cultures</p>
+        <h2 class="display text-5xl md:text-6xl leading-none" style="color:var(--ink)">The seven collections</h2>
+      </div>
+      <div class="lg:col-span-5 lg:col-start-8">
+        <p class="text-[1.05rem] leading-relaxed" style="color:var(--umber-2)">
+          The Public Celtic Encyclopedia is arranged as a museum arranges its holdings: by culture, then by period, then by class of object — deity, festival, site, source. Each entry is accessioned; each cites its manuscripts.
+        </p>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+      <a href="#" class="plate p-5 reveal">
+        <div class="thumb aspect-[4/5] w-full mb-5"></div>
+        <p class="tax accession text-[.7rem]">Acc. 001 · Gallery I</p>
+        <h3 class="display text-2xl mt-2" style="color:var(--ink)">Irish</h3>
+        <p class="sans text-[.9rem] mt-2" style="color:var(--umber-2)">Tuatha Dé Danann · Fenian &amp; Ulster cycles · fire festivals · Dindshenchas.</p>
+        <p class="tax text-xs mt-4" style="color:var(--umber)">142 entries →</p>
+      </a>
+      <a href="#" class="plate p-5 reveal">
+        <div class="thumb-2 aspect-[4/5] w-full mb-5"></div>
+        <p class="tax accession text-[.7rem]">Acc. 002 · Gallery I</p>
+        <h3 class="display text-2xl mt-2" style="color:var(--ink)">Scottish</h3>
+        <p class="sans text-[.9rem] mt-2" style="color:var(--umber-2)">Cailleach &amp; landscape · Carmina Gadelica · second sight · Hebridean rite.</p>
+        <p class="tax text-xs mt-4" style="color:var(--umber)">96 entries →</p>
+      </a>
+      <a href="#" class="plate p-5 reveal">
+        <div class="thumb-3 aspect-[4/5] w-full mb-5"></div>
+        <p class="tax accession text-[.7rem]">Acc. 003 · Gallery I</p>
+        <h3 class="display text-2xl mt-2" style="color:var(--ink)">Welsh</h3>
+        <p class="sans text-[.9rem] mt-2" style="color:var(--umber-2)">Four Branches of the Mabinogi · triads · Rhiannon · Red and White books.</p>
+        <p class="tax text-xs mt-4" style="color:var(--umber)">118 entries →</p>
+      </a>
+      <a href="#" class="plate p-5 reveal">
+        <div class="thumb aspect-[4/5] w-full mb-5"></div>
+        <p class="tax accession text-[.7rem]">Acc. 004 · Gallery I</p>
+        <h3 class="display text-2xl mt-2" style="color:var(--ink)">Breton</h3>
+        <p class="sans text-[.9rem] mt-2" style="color:var(--umber-2)">Armorican pardons · Ankou · Barzaz Breiz · drowned Ker-Is.</p>
+        <p class="tax text-xs mt-4" style="color:var(--umber)">64 entries →</p>
+      </a>
+      <a href="#" class="plate p-5 reveal">
+        <div class="thumb-2 aspect-[4/5] w-full mb-5"></div>
+        <p class="tax accession text-[.7rem]">Acc. 005 · Gallery I</p>
+        <h3 class="display text-2xl mt-2" style="color:var(--ink)">Cornish</h3>
+        <p class="sans text-[.9rem] mt-2" style="color:var(--umber-2)">Bucca · tin-stream piskies · Padstow Obby Oss · saints and place-names.</p>
+        <p class="tax text-xs mt-4" style="color:var(--umber)">41 entries →</p>
+      </a>
+      <a href="#" class="plate p-5 reveal">
+        <div class="thumb-3 aspect-[4/5] w-full mb-5"></div>
+        <p class="tax accession text-[.7rem]">Acc. 006 · Gallery I</p>
+        <h3 class="display text-2xl mt-2" style="color:var(--ink)">Manx</h3>
+        <p class="sans text-[.9rem] mt-2" style="color:var(--umber-2)">Manannán's isle · mooinjer veggey · Hop-tu-Naa · A. W. Moore's records.</p>
+        <p class="tax text-xs mt-4" style="color:var(--umber)">38 entries →</p>
+      </a>
+      <a href="#" class="plate p-5 reveal">
+        <div class="thumb aspect-[4/5] w-full mb-5"></div>
+        <p class="tax accession text-[.7rem]">Acc. 007 · Gallery I</p>
+        <h3 class="display text-2xl mt-2" style="color:var(--ink)">Gaulish</h3>
+        <p class="sans text-[.9rem] mt-2" style="color:var(--umber-2)">Lugus &amp; Cernunnos · Coligny calendar · votive inscriptions · reconstructionist frontier.</p>
+        <p class="tax text-xs mt-4" style="color:var(--umber)">126 entries →</p>
+      </a>
+      <a href="#" class="plate p-5 reveal darkplate">
+        <p class="tax text-[.7rem] mb-3" style="color:var(--bone)">Reading room</p>
+        <h3 class="display text-2xl mt-2">Comparative index</h3>
+        <p class="sans text-[.9rem] mt-3" style="color:#d7ccb8">Cross-references: cognate deities, shared festival dates, correspondences of epithet and place-name.</p>
+        <p class="tax text-xs mt-6 brass">Open the index →</p>
+      </a>
+    </div>
+  </div>
+  <div class="max-w-[1400px] mx-auto px-6 md:px-10"><div class="rule"></div></div>
+</section>
+
+<!-- PRAXIS -->
+<section id="praxis">
+  <div class="max-w-[1400px] mx-auto px-6 md:px-10 py-16 md:py-24">
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 mb-14 items-end reveal">
+      <div class="lg:col-span-6">
+        <p class="tax accession text-xs mb-4">Gallery II · Praxis</p>
+        <h2 class="display text-5xl md:text-6xl leading-none" style="color:var(--ink)">Ritual guides</h2>
+      </div>
+      <div class="lg:col-span-5 lg:col-start-8">
+        <p class="text-[1.05rem] leading-relaxed" style="color:var(--umber-2)">
+          One hundred and thirteen guides for the wheel of the year, for household devotion, for hearth-keeping. Each is annotated: what is attested, what is reconstructed, what is chosen for our own time.
+        </p>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <a href="#" class="plate p-6 reveal-2">
+        <div class="thumb aspect-[16/10] w-full mb-6"></div>
+        <p class="tax accession text-[.7rem]">Fire festival · P-042</p>
+        <h3 class="display text-2xl md:text-3xl mt-2" style="color:var(--ink)">Bealtaine at first-light</h3>
+        <p class="sans text-[.95rem] mt-3" style="color:var(--umber-2)">Kindling the need-fire before dawn on the first of May; the ordering, the driving of cattle, the household blessing.</p>
+        <p class="tax text-xs mt-5" style="color:var(--umber)">Read the guide →</p>
+      </a>
+      <a href="#" class="plate p-6 reveal-2">
+        <div class="thumb-2 aspect-[16/10] w-full mb-6"></div>
+        <p class="tax accession text-[.7rem]">Household rite · P-011</p>
+        <h3 class="display text-2xl md:text-3xl mt-2" style="color:var(--ink)">A well-blessing for Brigit</h3>
+        <p class="sans text-[.95rem] mt-3" style="color:var(--umber-2)">Imbolc dressing of the household well: reeds cut for the cross, the mantle laid at the door, three names spoken aloud.</p>
+        <p class="tax text-xs mt-5" style="color:var(--umber)">Read the guide →</p>
+      </a>
+      <a href="#" class="plate p-6 reveal-2">
+        <div class="thumb-3 aspect-[16/10] w-full mb-6"></div>
+        <p class="tax accession text-[.7rem]">Dark half · P-088</p>
+        <h3 class="display text-2xl md:text-3xl mt-2" style="color:var(--ink)">Samhain: welcoming the dead</h3>
+        <p class="sans text-[.95rem] mt-3" style="color:var(--umber-2)">Ancestral vigil on the eve of winter: the empty place at table, the lamp in the window, the naming of the year's dead.</p>
+        <p class="tax text-xs mt-5" style="color:var(--umber)">Read the guide →</p>
+      </a>
+    </div>
+  </div>
+  <div class="max-w-[1400px] mx-auto px-6 md:px-10"><div class="rule"></div></div>
+</section>
+
+<!-- WHY OPEN -->
+<section>
+  <div class="max-w-[1400px] mx-auto px-6 md:px-10 py-20 md:py-28">
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 reveal">
+      <div class="lg:col-span-4">
+        <p class="tax accession text-xs mb-3">Editorial statement</p>
+        <p class="display text-3xl" style="color:var(--moss-deep)">Why the doors are open.</p>
+      </div>
+      <div class="lg:col-span-7 lg:col-start-6">
+        <p class="display text-3xl md:text-4xl leading-tight" style="color:var(--ink)">
+          A living tradition is a plural one. We publish the sources, the disagreements, and the working notes so any reader may weigh them for themselves.
+        </p>
+        <p class="mt-8 text-lg leading-relaxed max-w-2xl" style="color:var(--umber-2)">
+          There is no single Celtic orthodoxy — there never was. What we offer is a museum's honesty: an accession record for every claim, a citation for every source, and gallery labels that admit what remains uncertain.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="darkplate">
+  <div class="max-w-[1400px] mx-auto px-6 md:px-10 pt-16 pb-12">
+    <div class="grid grid-cols-1 md:grid-cols-12 gap-10">
+      <div class="md:col-span-5">
+        <p class="display text-3xl">OpenOrdú</p>
+        <p class="tax text-xs mt-1" style="color:#c9bd9f">CelticPaganism.org</p>
+        <p class="mt-6 max-w-md text-[1rem] leading-relaxed" style="color:#d7ccb8">
+          A collaborative library for the study and practice of Celtic Paganism. Encyclopedia, ritual guides, and a community of readers.
+        </p>
+      </div>
+      <div class="md:col-span-3">
+        <p class="tax text-xs mb-4 brass">Galleries</p>
+        <ul class="space-y-2 text-[.98rem]" style="color:#e5dcc4">
+          <li><a href="#encyclopedia">Encyclopedia (PCE)</a></li>
+          <li><a href="#praxis">Praxis guides</a></li>
+          <li><a href="#">Quiz</a></li>
+          <li><a href="#">Blog</a></li>
+          <li><a href="#">Tags &amp; categories</a></li>
+        </ul>
+      </div>
+      <div class="md:col-span-4">
+        <p class="tax text-xs mb-4 brass">Search the collection</p>
+        <form class="flex items-center" onsubmit="event.preventDefault()">
+          <input type="text" placeholder="Type an accession, a name, a rite…" class="w-full bg-transparent py-3 pr-3 text-base placeholder:italic" style="color:var(--bone);border-bottom:1px solid rgba(244,237,224,.3);outline:none" />
+          <button class="tax text-xs px-3 py-3 brass">Find</button>
+        </form>
+        <p class="tax text-xs mt-8 mb-3 brass">Provenance</p>
+        <p class="text-sm" style="color:#d7ccb8">Text under <a href="#" class="underline">CC BY-SA 4.0</a>. Source on <a href="#" class="underline">GitHub / openordu</a>.</p>
+      </div>
+    </div>
+    <div class="mt-14 pt-6 flex flex-wrap items-center justify-between gap-4" style="border-top:1px solid rgba(244,237,224,.15)">
+      <p class="tax text-xs" style="color:#c9bd9f">MMXXVI · Catalogue of record</p>
+      <p class="sans italic text-sm" style="color:#c9bd9f">Set in Spectral &amp; Work Sans. Doors open to all readers.</p>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Mobile menu
+  document.getElementById('menu-btn')?.addEventListener('click', () => {
+    document.getElementById('menu').classList.toggle('hidden');
+  });
+
+  // Count-up on scroll
+  const countEls = document.querySelectorAll('[data-count]');
+  const runCount = (el) => {
+    const target = parseInt(el.dataset.count, 10);
+    const dur = 1400;
+    const start = performance.now();
+    const step = (now) => {
+      const t = Math.min(1, (now - start) / dur);
+      const eased = 1 - Math.pow(1 - t, 3);
+      el.textContent = Math.floor(eased * target).toString();
+      if (t < 1) requestAnimationFrame(step);
+      else el.textContent = target.toString();
+    };
+    requestAnimationFrame(step);
+  };
+
+  // Scroll reveal + count-up trigger
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach((e) => {
+      if (e.isIntersecting) {
+        e.target.classList.add('in');
+        const c = e.target.querySelector('[data-count]');
+        if (c && !c.dataset.done) { c.dataset.done = '1'; runCount(c); }
+        if (e.target.matches('[data-count]') && !e.target.dataset.done) {
+          e.target.dataset.done = '1'; runCount(e.target);
+        }
+        io.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.2 });
+
+  document.querySelectorAll('.reveal, .reveal-2, [data-count]').forEach(el => io.observe(el));
+</script>
+</body>
+</html>
