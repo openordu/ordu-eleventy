@@ -5,9 +5,7 @@ var sass = require('gulp-dart-sass');
 var clean = require('gulp-clean');
 var browserSync = require('browser-sync').create();
 var rename = require('gulp-rename');
-const purgecss = require('gulp-purgecss');
 const imagemin = require('gulp-imagemin');
-const htmlmin = require('gulp-htmlmin');
 var htmlreplace = require('gulp-html-replace');
 var reload      = browserSync.reload;
 var exec        = require('child_process').exec;
@@ -39,10 +37,11 @@ gulp.task('dist-assets', function (done) {
       done();
 });
 
-gulp.task('prod-copy', function (done) {
-    gulp.src('./dev/**/**.*')
+gulp.task('prod-copy', function () {
+    // Return the stream — calling done() early (old code) let minify-html race
+    // ahead and hit not-yet-copied files (ENOENT public/merch/index.html).
+    return gulp.src('./dev/**/**.*')
     .pipe(gulp.dest('./public/'));
-    done();
 });
 
 gulp.task('minify-css', () => {
@@ -58,23 +57,23 @@ gulp.task('minify-css', () => {
     .pipe(browserSync.stream());
 });
 
-// minifies HTML
-gulp.task('minify-html', () => {
-  return gulp.src('public/**/*.html')
-    .pipe(htmlmin({ collapseWhitespace: true, removeComments: true }))
-    .pipe(gulp.dest('public'));
-});
+// HTML minification — REMOVED at GAF-276 T14 (build-gate blocker root-caused).
+// html-minifier is pathologically slow on this corpus (~6s+ per category page,
+// hundreds of pages -> hours) for BOTH collapseWhitespace AND removeComments,
+// so no option tuning fixes it. Eleventy output is already compact and the
+// deploy serves gzip (63.8% ratio measured on the live root), so a separate
+// minify pass is redundant on the wire. Same reasoning as the old pruning-pass
+// removal above: Tailwind + clean-css handle what matters; this pass only
+// added cost.
+//
+// If HTML minification is ever wanted again, it must be a FAST minifier — not
+// gulp-htmlmin on this corpus.
 
 
-// Purging unused CSS
-gulp.task('purgecss', () => {
-    return gulp.src('public/css/theme.min.css')
-        .pipe(purgecss({
-            content: ['public/**/*.html'],
-            safelist: ['shine','pulsate','sticky','search-suggestions', 'quiz','list-group-item-danger','list-group-item-primary','collapsed', 'collapse', 'active', 'show', 'collapsing' ]
-        }))
-        .pipe(gulp.dest('public/css'))
-})
+// Unused-CSS removal — REMOVED at GAF-276 T14. Tailwind's own build (the
+// 'tailwind' task) already tree-shakes against the content globs in
+// tailwind.config.js, so a separate gulp pruning pass was redundant AND would
+// strip classes Tailwind intentionally emits before Eleventy writes final HTML.
 
 gulp.task('clean-public', function() {
   return gulp.src('public', {

@@ -12,8 +12,9 @@ module.exports = {
   ],
   // PLANK: markdown-it-ordu/quiz/tips-bootstrap emit Bootstrap markup from
   // the CONTENT layer (unmodifiable scope-lock). Safelist the classes those
-  // plugins generate so Tailwind does not purge them (same list the old
-  // purgecss step guarded).
+  // plugins generate so Tailwind keeps emitting them. (The separate gulp
+  // pruning step that once guarded this list was removed at GAF-276 T14;
+  // Tailwind's own purge is the only pruning pass now.)
   safelist: [
     // Non-Tailwind classes emitted by content-layer plugins or custom CSS
     // that must survive the Tailwind build (purge-safe). Only exact-string
