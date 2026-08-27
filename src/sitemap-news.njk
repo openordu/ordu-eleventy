@@ -1,0 +1,26 @@
+---
+permalink: /sitemap-news.xml
+eleventyExcludeFromCollections: true
+title: Sitemap News
+index: false
+---
+{% if site.sitemap_enabled %}<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:news="http://www.google.com/schemas/sitemap-news/0.9">
+  {% for post in collections.sortedPosts %}
+    {% if post.url and post.data.date %}
+      <url>
+        <loc>{{ site.url }}{{ post.url | url }}</loc>
+        <news:news>
+          <news:publication>
+            <news:name>{{ metadata.title }}</news:name>
+            <news:language>{{ metadata.language }}</news:language>
+          </news:publication>
+          <news:publication_date>{{ post.data.date | htmlDateString }}T00:00:00Z</news:publication_date>
+          <news:title>{{ post.data.title | escape }}</news:title>
+        </news:news>
+      </url>
+    {% endif %}
+  {% endfor %}
+</urlset>
+{% endif %}
