@@ -9,3 +9,7 @@ yarn-error.log
 *.save
 .history
 public
+
+# Python bytecode
+__pycache__/
+*.pyc
