@@ -50,6 +50,10 @@ const removeAccents = (str) => {
 module.exports = function(eleventyConfig) {
   eleventyConfig.setDataDeepMerge(true);
   eleventyConfig.addPlugin(eleventyNavigationPlugin);
+  eleventyConfig.addPlugin(rssPlugin);
+  eleventyConfig.addFilter("cdataSafe", (content) =>
+    String(content).split("]]>").join("]]]]><![CDATA[>")
+  );
   eleventyConfig.addFilter("debug", (content) => `${inspect(content)}`);
   // eleventyConfig.addPlugin(eleventyPluginSyntaxHighlighter);
   eleventyConfig.addNunjucksAsyncFilter('fileModifiedDate', fileModifiedDate());
