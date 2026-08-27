@@ -287,7 +287,7 @@ module.exports = function(eleventyConfig) {
   });
   return {
     metadata: {
-      url: "https://celticpaganism.org", // Your website URL
+      url: "https://openordu.github.io", // Your website URL
     },
     dir: {
       input: "src",
