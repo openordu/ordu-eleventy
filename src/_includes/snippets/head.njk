@@ -6,6 +6,24 @@
   <meta name="generator" content="11straps">
   <meta name="HandheldFriendly" content="true"/>
   <title>{{ title or metadata.title }}</title>
+  <!-- canonical + social (Open Graph / Twitter Card), GAF-277 T19 -->
+  <link rel="canonical" href="{{ site.url }}{{ page.url | url }}">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="{{ title or metadata.title }}">
+  <meta property="og:description" content="{{ metadata.description }}">
+  <meta property="og:url" content="{{ site.url }}{{ page.url | url }}">
+  <meta property="og:site_name" content="{{ metadata.title or metadata.title }}">
+  <meta property="og:image" content="{{ site.url }}/assets/green_logo.png">
+  <meta property="og:locale" content="en">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="{{ title or metadata.title }}">
+  <meta name="twitter:description" content="{{ metadata.description }}">
+  <meta name="twitter:url" content="{{ site.url }}{{ page.url | url }}">
+  <meta name="twitter:image" content="{{ site.url }}/assets/green_logo.png">
+  <!-- feed discovery -->
+  <link rel="alternate" type="application/atom+xml" title="{{ metadata.title }} — Atom Feed" href="{{ site.url }}/feed.xml">
+  <!-- feed consumer (renders latest posts, GAF-277 T19) -->
+  <script src="/js/feed-consumer.js" async></script>
   <!-- build:css -->
   <link rel="stylesheet" href="{{ '/css/theme.css' | url }}">
   <!-- endbuild -->

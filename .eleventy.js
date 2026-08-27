@@ -96,6 +96,10 @@ module.exports = function(eleventyConfig) {
   eleventyConfig.addPassthroughCopy('./src/lib/main.js');
   eleventyConfig.addPassthroughCopy('./src/assets');
   eleventyConfig.addPassthroughCopy('./src/robots.txt');
+  // feed consumer (GAF-277 T19) — CI build runs eleventy only (no gulp), so the
+  // feed consumer must passthrough-copy to reach output js/ (object form maps
+  // src/js/feed-consumer.js -> output js/feed-consumer.js; default retains src/).
+  eleventyConfig.addPassthroughCopy({ './src/js/feed-consumer.js': './js/feed-consumer.js' });
 
   // for markdown extensions
   let options = {
