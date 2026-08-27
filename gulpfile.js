@@ -140,18 +140,16 @@ gulp.task('inject-min-css', function(done) {
 
 ////////////////// All Bootstrap SASS  Assets /////////////////////////
 gulp.task( 'copy-assets', function( done ) {
-	////////////////// All Bootstrap 4 Assets /////////////////////////
+	// GAF-276 T16: ONLY the JS copy remains. The Bootstrap SCSS copy block was
+	// REMOVED — it re-created src/scss/assets/bootstrap (a deleted-orphan tree)
+	// on every `npm ci` postinstall. theme.scss has no import of it (T13) and
+	// nothing references the path, so copying it back is dead activity that
+	// muddies the tree. JS bundle copy is kept (src/js/bootstrap.bundle.* are
+	// tracked files).
 	// Copy all JS files
 	var stream = gulp
 		.src( paths.node + '/bootstrap/dist/js/**/*.*' )
 		.pipe( gulp.dest( paths.dev + '/js' ) );
-
-	// Copy all Bootstrap SCSS files
-	gulp
-		.src( paths.node + '/bootstrap/scss/**/*.scss' )
-		.pipe( gulp.dest( paths.dev + '/scss/assets/bootstrap' ) );
-
-	////////////////// End Bootstrap 4 Assets /////////////////////////
 
 	done();
 } );
