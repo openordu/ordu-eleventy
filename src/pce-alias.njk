@@ -1,0 +1,20 @@
+---
+permalink: /pce/{{ alias | lower }}/
+eleventyExcludeFromCollections: true
+pagination:
+  data: pceVolumes
+  size: 1
+  alias: alias
+---
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="refresh" content="0; url=/content/pce/{{ alias | lower }}/">
+  <link rel="canonical" href="/content/pce/{{ alias | lower }}/">
+  <title>PCE Volume {{ alias }} — moved</title>
+</head>
+<body>
+  <p>This page moved. Go to <a href="/content/pce/{{ alias | lower }}/">Volume {{ alias }}</a>.</p>
+</body>
+</html>
