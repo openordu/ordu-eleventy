@@ -98,6 +98,12 @@ module.exports = function(eleventyConfig) {
   eleventyConfig.addPassthroughCopy('./src/lib/main.js');
   eleventyConfig.addPassthroughCopy('./src/assets');
   eleventyConfig.addPassthroughCopy('./src/robots.txt');
+  // GitHub Pages Jekyll guard (GAF-297 hotfix 2): without .nojekyll, GitHub's
+  // Jekyll step silently DROPS every underscore-prefixed output dir — it ate
+  // all 73 content/praxes/**/_index/ pages from the deployed site. The empty
+  // marker file disables Jekyll processing; the Pages deploy pushes built
+  // files verbatim.
+  eleventyConfig.addPassthroughCopy({ './src/nojekyll': '.nojekyll' });
   // feed consumer (GAF-277 T19) — CI build runs eleventy only (no gulp), so the
   // feed consumer must passthrough-copy to reach output js/ (object form maps
   // src/js/feed-consumer.js -> output js/feed-consumer.js; default retains src/).
