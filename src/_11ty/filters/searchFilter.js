@@ -32,15 +32,18 @@ module.exports = function (collection) {
 
   // loop through each page and add it to the index
   collection.forEach((page) => {
+    // GAF-296 T4: page.template.frontMatter.data (sync monkey-patched internal
+    // getter) is not async-friendly and errors on Eleventy 3. page.data is the
+    // v3-native merged data cascade on the collection item.
     index.addDoc({
       id: page.url,
-      title: page.template.frontMatter.data.title,
-      entities: page.template.frontMatter.data.entities,
-      attributes: page.template.frontMatter.data.attributes,
-      sources: page.template.frontMatter.data.sources,
-      tags: page.template.frontMatter.data.tags,
-      categories: page.template.frontMatter.data.categories,
-      summary: page.template.frontMatter.data.summary,
+      title: page.data.title,
+      entities: page.data.entities,
+      attributes: page.data.attributes,
+      sources: page.data.sources,
+      tags: page.data.tags,
+      categories: page.data.categories,
+      summary: page.data.summary,
     });
   });
 

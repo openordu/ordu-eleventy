@@ -48,7 +48,9 @@ const removeAccents = (str) => {
 }
 
 module.exports = function(eleventyConfig) {
-  eleventyConfig.setDataDeepMerge(true);
+  // GAF-296 T4: setDataDeepMerge was REMOVED in Eleventy 2.0 (deep data merge is
+  // the default behavior since 2.0; the v1 opt-in call is a v3 boot error).
+  // eleventyConfig.setDataDeepMerge(true);
   eleventyConfig.addPlugin(eleventyNavigationPlugin);
   eleventyConfig.addPlugin(rssPlugin);
   eleventyConfig.addFilter("cdataSafe", (content) =>
@@ -161,6 +163,22 @@ module.exports = function(eleventyConfig) {
 
       return aDate - bDate;
     });
+  });
+
+  // GAF-296 T5b: build the navigation tree ONCE per build instead of calling the
+  // eleventyNavigation filter per page. CPU profile (2026-08-28, 101,100 samples):
+  // findNavigationEntries is O(n^2) in the node array (~3,879 entries via
+  // eleventyComputed), and sidebar/breadcrumbs/prevnext called it on
+  // collections.all for EVERY page = ~87% of total build CPU. The plugin
+  // (1.0.5, latest) has no upstream fix. Eleventy collections are computed once
+  // and cached; navTree holds the exact same structure the filter returned
+  // (findNavigationEntries on collections.all), so template output is unchanged.
+  eleventyConfig.addCollection("navTree", function(collection) {
+    // NOTE: require("@11ty/eleventy-navigation") resolves to the plugin config
+    // function (pkg main = .eleventy.js). The tree builder lives at
+    // .navigation.find — the same findNavigationEntries the plugin registers
+    // as the eleventyNavigation filter. Use the top-level `navigationPlugin`.
+    return navigationPlugin.navigation.find(collection.getAll());
   });
   eleventyConfig.addNunjucksFilter("replaceString", function(value, search, replacement) {
     return value.split(search).join(replacement);

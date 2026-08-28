@@ -1,5 +1,5 @@
 {% set pagesByUrl = collections.all | keyBy("url") %}
-{% set result = collections.all | eleventyNavigation | findItemByUrl(page.url) %}
+{% set result = collections.navTree | findItemByUrl(page.url) %}
 {% set currentIndex = result.index %}
 {% set subPages = result.subPages %}
 {% macro nextprevnav(prevUrl, nextUrl, currentIndex, subPages) -%}

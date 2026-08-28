@@ -8,7 +8,10 @@ permalink: /feed.xml
   <subtitle>{{ metadata.description }}</subtitle>
   <link href="{{ site.url }}/feed.xml" rel="self"/>
   <link href="{{ site.url }}/"/>
-  <updated>{{ collections.sortedPosts | rssLastUpdatedDate }}</updated>
+  {# GAF-296 T4: rssLastUpdatedDate/rssDate filters were removed in rss plugin
+     v2 (Eleventy 3 era). Replacement: getNewestCollectionItemDate | dateToRfc3339
+     for the feed-level <updated>, dateToRfc822 for per-entry dates. #}
+  <updated>{% if collections.sortedPosts %}{{ collections.sortedPosts | getNewestCollectionItemDate | dateToRfc3339 }}{% else %}{{ 'now' | dateToRfc3339 }}{% endif %}</updated>
   <id>{{ site.url }}/</id>
   <author>
     <name>{{ metadata.author }}</name>
@@ -21,7 +24,8 @@ permalink: /feed.xml
     <entry>
       <title>{{ post.data.title }}</title>
       <link href="{{ absolutePostUrl }}"/>
-      <updated>{{ post.date | rssDate }}</updated>
+      {# GAF-296 T4: rssDate removed in rss plugin v2 → dateToRfc3339 (Atom feed) #}
+      <updated>{{ post.date | dateToRfc3339 }}</updated>
       <id>{{ absolutePostUrl }}</id>
       <content type="html"><![CDATA[{{ post.templateContent | htmlToAbsoluteUrls(absolutePostUrl) | cdataSafe }}]]></content>
     </entry>
