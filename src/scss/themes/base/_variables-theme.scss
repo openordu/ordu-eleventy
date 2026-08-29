@@ -1,11 +1,12 @@
 //This is an example of how you can change BS5 variables. Just add the changed variables here and they will overwrite the defaults.
-// We changed the default font and the default $blue color (which is set as $primary as well)
-$blue:    #4343cc;
-$teal:    #4abf8a;
-$primary:   $teal !default;
-$secondary: $blue !default;
-$body-color: #494949 !default;
-$text-dark: #494949 !default;
+// GAF-276 T17: re-pointed to the approved V5 "Animated Atlas" winner
+// (dark peat/bone/gold) — same variable names, new target palette.
+$blue:    #8f6d1e; // V5 gold-deep (was indigo $blue #4343cc)
+$teal:    #6c7a44; // V5 moss (was mint #4abf8a)
+$primary:   #c39a3a !default; // V5 gold
+$secondary: #6c7a44 !default; // V5 moss
+$body-color: #efe7d3 !default; // V5 bone — light body text on peat
+$text-dark: #d8cfb7 !default;  // V5 bone-2 — secondary light tone
 $font-size-base:  1rem !default; // Assumes the browser default, typically `16px`
 
 $display-font-sizes: (

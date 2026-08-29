@@ -6,6 +6,7 @@
   </head>
 
   <body>
+    <div id="progress"></div>
 
     {% include 'snippets/navbar.njk' %}
 
@@ -13,10 +14,11 @@
       {{ content | safe }}
     </main>
 
-    <footer class="text-center lg:text-left bg-mist/50 text-ink/50 pt-1">
+    <footer class="text-center lg:text-left bg-peat/60 text-mist pt-1">
       {% include 'snippets/footer.njk' %}
     </footer>
 
+    {% include 'snippets/v5-motion.njk' %}
   </body>
 
 </html>

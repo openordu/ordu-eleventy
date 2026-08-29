@@ -8,7 +8,7 @@
       <p>
       {% for tag in post.data.tags | filterTagList %}
         {% set tagUrl %}/tags/{{ tag | slugify }}/{% endset %}
-        <a href="{{ tagUrl | url }}" class="inline-flex items-center justify-center rounded border border-earth px-3 py-1 text-sm text-ink hover:bg-earth hover:text-bone mr-2">{{ tag }}</a>
+        <a href="{{ tagUrl | url }}" class="inline-flex items-center justify-center rounded border border-gold px-3 py-1 text-sm text-bone hover:bg-gold/10 mr-2">{{ tag }}</a>
       {% endfor %}
     </p>
       <p>{{ post.data.summary }}</p>
@@ -26,7 +26,7 @@
     <div class="grid grid-cols-12 justify-between">
       <div class="col-span-6">
         {% if pagination.href.previous %}
-          <a href="{{pagination.href.previous}}" class="inline-flex items-center justify-center rounded border border-moss px-4 py-2 font-semibold text-ink hover:bg-moss hover:text-bone"> <i class="fa-solid fa-arrow-left"></i> Previous Page</a> {% endif %} </div> <div class="col-span-6 text-right"> {% if pagination.href.next %} <a href="{{pagination.href.next}}" class="inline-flex items-center justify-center rounded border border-moss px-4 py-2 font-semibold text-ink hover:bg-moss hover:text-bone">Next Page <i class="fa-solid fa-arrow-right"></i></a>
+          <a href="{{pagination.href.previous}}" class="inline-flex items-center justify-center rounded border border-moss px-4 py-2 font-semibold text-bone hover:bg-moss hover:text-bone"> <i class="fa-solid fa-arrow-left"></i> Previous Page</a> {% endif %} </div> <div class="col-span-6 text-right"> {% if pagination.href.next %} <a href="{{pagination.href.next}}" class="inline-flex items-center justify-center rounded border border-moss px-4 py-2 font-semibold text-bone hover:bg-moss hover:text-bone">Next Page <i class="fa-solid fa-arrow-right"></i></a>
         {% endif %}
       </div>
     </div>

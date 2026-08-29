@@ -8,7 +8,7 @@ body {
   font-weight: 500 !important;
 }
 .outlined-pill {
-  outline: 1px solid #000000;
+  outline: 1px solid rgba(239, 231, 211, .25);
   outline-offset: 0px;
 }
 #sidebar a {
@@ -50,12 +50,12 @@ div#sidebar, div.main{
   0% {
     background-size: 200% auto;
     background-position: -100%;
-    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.76), transparent);
+    background: linear-gradient(90deg, transparent, rgba(195, 154, 58, 0.16), transparent);
   }
   50% {
     background-size: 200% auto;
     background-position: 200%;
-    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.745), transparent);
+    background: linear-gradient(90deg, transparent, rgba(195, 154, 58, 0.16), transparent);
   }
   100% {
     background-size: unset;
@@ -82,7 +82,7 @@ div#sidebar, div.main{
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: #fff;
+  background-color: #141412; /* GAF-276 T17: V5 peat splash */
   display: flex;
   align-items: center;
   justify-content: center;
@@ -128,7 +128,7 @@ table {
   }
   .list-group-item-primary, .list-group-item-primary:active {
     background-color: $primary!important;
-    color: #fff!important;
+    color: #141412!important; /* V5 peat text on gold */
   }
 }
 
@@ -137,7 +137,7 @@ table {
   bottom: 0;
   width: 100%;
   height: 60px; /* adjust this value according to your desired footer height */
-  background-color: #f8f9fa;
+  background-color: #1c1b17; /* V5 peat-2 panel */
 }
 
 table {
@@ -169,13 +169,13 @@ tr {
 th, td {
   padding: 0.5rem;
   vertical-align: top;
-  border-top: 1px solid #646464;
+  border-top: 1px solid #7d786c; /* V5 mist-2 hairline */
 }
 tr:nth-child(even) {
-  background-color: #f2f2f2; /* Adjust the color as desired */
+  background-color: #1c1b17; /* V5 peat-2 zebra panel */
 }
 td {
-  border-right: 1px solid #646464;
+  border-right: 1px solid #7d786c;
 }
 
 .preformatted {
@@ -185,8 +185,8 @@ td {
 
 th {
   text-align: inherit;
-  background-color: #f8f9fa;
-  border-bottom: 2px solid #646464;
+  background-color: #25231e; /* V5 peat-3 panel head */
+  border-bottom: 2px solid #7d786c;
 }
 
 .listwrap {
@@ -248,7 +248,7 @@ a.external-link {
 blockquote {
 padding: 10px 20px;
 margin: 0 0 20px;
-border-left: 5px solid #eee;
+border-left: 5px solid #25231e; /* V5 peat-3 panel tone */
 font-size: 1.25rem;
 font-weight: 300;
 margin-top: 3rem;
@@ -259,28 +259,28 @@ blockquote footer, blockquote small {
   display: block;
   font-size: 80%;
   line-height: 1.42857143;
-  color: #777;
+  color: #a9a293; /* V5 mist */
 }
 
 code {
   font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace;
   font-size: 0.9em;
-  background-color: rgba(27, 31, 35, 0.05);
+  background-color: rgba(239, 231, 211, 0.06); /* V5 bone-alpha chip on dark */
   border-radius: 6px;
   padding: 0.2em 0.4em;
   margin: 0;
-  border: 1px solid rgba(27, 31, 35, 0.15);
+  border: 1px solid rgba(239, 231, 211, 0.16);
 }
 
 pre code {
   display: block;
   font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace;
   font-size: 0.9em;
-  background-color: rgba(13, 15, 17, 0.05);
+  background-color: rgba(239, 231, 211, 0.07);
   border-radius: 6px;
   padding: 0.2em 0.4em;
   margin: 0;
-  border: 1px solid rgba(27, 31, 35, .5);
+  border: 1px solid rgba(239, 231, 211, 0.22);
   min-width: 100%;
 }
 
@@ -447,7 +447,7 @@ h1:hover a.header-anchor, h2:hover a.header-anchor, h3:hover a.header-anchor, h4
 // }
 
 .dropdown-item.active a, .dropdown-item.active i {
-  color: #fff !important;
+  color: #efe7d3 !important; /* V5 bone active item */
 }
 
 ul:has(li > a.custom-internal-link[href^="/pce/"]) {
@@ -457,7 +457,7 @@ ul:has(li > a.custom-internal-link[href^="/pce/"]) {
 }
 
 .code-tabs {
-  border: 1px solid rgb(240, 240, 240);
+  border: 1px solid #25231e; /* V5 peat-3 panel border */
   border-radius: 3px;
   div.tab-content, input {
       display: none;
@@ -466,10 +466,10 @@ ul:has(li > a.custom-internal-link[href^="/pce/"]) {
       display: block;
   }
   label {
-      color: rgba(191, 191, 191, 1);
+      color: #7d786c; /* V5 mist-2 */
   }
   input:checked + label {
-      color: rgba(38, 38, 38, 1);
+      color: #efe7d3; /* V5 bone */
   }
   ul {
       font-size: 0;
@@ -477,7 +477,7 @@ ul:has(li > a.custom-internal-link[href^="/pce/"]) {
       white-space: nowrap;
       overflow: auto;
       user-select: none;
-      border-bottom: 1px solid rgb(240, 240, 240);
+      border-bottom: 1px solid #25231e;
   }
   li {
       list-style: none;
@@ -530,7 +530,7 @@ ul:has(li > a.custom-internal-link[href^="/pce/"]) {
   column-count: 1;
   column-gap: 40px;
   /* And a line to visually separate them */
-  column-rule: 0px solid #fff;
+  column-rule: 0px solid #1c1b17;
 }
 .magazineStyle {
   column-count: 1;
@@ -550,7 +550,7 @@ ul:has(li > a.custom-internal-link[href^="/pce/"]) {
 }
 div.tab-content {
   padding: 10px;
-  border: 1px solid rgb(240, 240, 240);
+  border: 1px solid #25231e;
   border-top: none;
   border-radius: 0 0 3px 3px;
  }
@@ -558,7 +558,7 @@ div.tab-content ul {
     font-size: $font-size-base !important;
     padding: 10px !important;
     white-space: wrap !important;
-    border-bottom: 0px solid rgb(240, 240, 240) !important;
+    border-bottom: 0px solid #25231e !important;
 }
 // div.tab-content  li {
 //       list-style: none;

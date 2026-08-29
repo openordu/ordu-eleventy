@@ -1,0 +1,86 @@
+<script>
+  // GAF-276 T17: V5 "Animated Atlas" motion, ported from
+  // src/preview/variant-5/index.html. Progress bar is exact; the atlas /
+  // count-up blocks are inert no-ops on pages without those elements.
+
+  document.getElementById('menu-btn')?.addEventListener('click', () => {
+    document.getElementById('menu').classList.toggle('hidden');
+  });
+
+  // Scroll progress indicator
+  const progress = document.getElementById('progress');
+  const updateProgress = () => {
+    const h = document.documentElement;
+    const scrolled = h.scrollTop;
+    const max = h.scrollHeight - h.clientHeight;
+    const pct = max > 0 ? (scrolled / max) * 100 : 0;
+    progress.style.width = pct + '%';
+  };
+  window.addEventListener('scroll', updateProgress, { passive: true });
+  updateProgress();
+
+  // Pinned atlas: bind panel index to scroll progress within the atlas track
+  const atlas = document.getElementById('atlas');
+  const rail = document.getElementById('rail');
+  if (atlas && rail) {
+    const panels = document.querySelectorAll('.atlas-panel');
+    const railItems = rail.querySelectorAll('li');
+    const countEl = document.getElementById('atlasCount');
+    const stops = panels.length;
+
+    const setIdx = (idx) => {
+      idx = Math.max(0, Math.min(stops - 1, idx));
+      panels.forEach((p, i) => p.classList.toggle('active', i === idx));
+      railItems.forEach((li, i) => li.classList.toggle('active', i === idx));
+      if (countEl) countEl.textContent = (idx + 1) + '/' + stops;
+    };
+    railItems.forEach(li => li.addEventListener('click', () => {
+      const idx = parseInt(li.dataset.idx, 10);
+      const rect = atlas.getBoundingClientRect();
+      const top = window.scrollY + rect.top;
+      const span = atlas.offsetHeight - window.innerHeight;
+      const y = top + (span * idx / (stops - 1));
+      window.scrollTo({ top: y, behavior: 'smooth' });
+    }));
+
+    const updateAtlas = () => {
+      const rect = atlas.getBoundingClientRect();
+      const top = -rect.top;
+      const span = atlas.offsetHeight - window.innerHeight;
+      if (span <= 0) return;
+      const t = Math.max(0, Math.min(1, top / span));
+      const idx = Math.round(t * (stops - 1));
+      setIdx(idx);
+    };
+    window.addEventListener('scroll', updateAtlas, { passive: true });
+    window.addEventListener('resize', updateAtlas);
+    updateAtlas();
+  }
+
+  // Count-up + reveal on view
+  const runCount = (el) => {
+    const target = parseInt(el.dataset.count, 10);
+    const dur = 1400, start = performance.now();
+    const step = (now) => {
+      const t = Math.min(1, (now - start) / dur);
+      const eased = 1 - Math.pow(1 - t, 3);
+      el.textContent = Math.floor(eased * target).toString();
+      if (t < 1) requestAnimationFrame(step); else el.textContent = target.toString();
+    };
+    requestAnimationFrame(step);
+  };
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('in');
+        const c = e.target.querySelector('[data-count]');
+        if (c && !c.dataset.done) { c.dataset.done = '1'; runCount(c); }
+        if (e.target.matches('[data-count]') && !e.target.dataset.done) {
+          e.target.dataset.done = '1'; runCount(e.target);
+        }
+        io.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.2 });
+  document.querySelectorAll('.reveal, [data-count]').forEach(el => io.observe(el));
+</script>

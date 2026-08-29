@@ -25,11 +25,11 @@
                   {% set prevItem = collections.post[currentIndex - 1] if currentIndex > 0 else null %}
                 {% endif %}
                 {% if prevItem != null %}
-                <a href="{{ prevItem.url | url }}" class="inline-flex items-center justify-center rounded border border-moss px-4 py-2 font-semibold text-ink hover:bg-moss hover:text-bone" role="button">
+                <a href="{{ prevItem.url | url }}" class="inline-flex items-center justify-center rounded border border-moss px-4 py-2 font-semibold text-bone hover:bg-moss hover:text-bone" role="button">
                   <i class="fas fa-arrow-left"></i> Prev: {{ prevItem.data.title if prevItem }}
                 </a>
                 {% else %}
-                <button class="inline-flex items-center justify-center rounded border border-moss px-4 py-2 font-semibold text-ink hover:bg-moss hover:text-bone" role="button" disabled>
+                <button class="inline-flex items-center justify-center rounded border border-moss px-4 py-2 font-semibold text-bone hover:bg-moss hover:text-bone" role="button" disabled>
                   <i class="fas fa-arrow-left"></i> Prev: {{ prevItem.data.title if prevItem }}
                 </button>
                 {% endif %}
@@ -40,11 +40,11 @@
                   {% set nextItem = collections.post[currentIndex + 1] if currentIndex < (collections.post.length or 0) - 1 else null %}
                 {% endif %}
                 {% if nextItem != null %}
-                <a href="{{ nextItem.url | url }}" class="inline-flex items-center justify-center rounded border border-moss px-4 py-2 font-semibold text-ink hover:bg-moss hover:text-bone" role="button">
+                <a href="{{ nextItem.url | url }}" class="inline-flex items-center justify-center rounded border border-moss px-4 py-2 font-semibold text-bone hover:bg-moss hover:text-bone" role="button">
                   Next: {{ nextItem.data.title if nextItem }} <i class="fas fa-arrow-right"></i>
                 </a>
                 {% else %}
-                <button class="inline-flex items-center justify-center rounded border border-moss px-4 py-2 font-semibold text-ink hover:bg-moss hover:text-bone" role="button" disabled>
+                <button class="inline-flex items-center justify-center rounded border border-moss px-4 py-2 font-semibold text-bone hover:bg-moss hover:text-bone" role="button" disabled>
                   Next: {{ nextItem.data.title if nextItem }} <i class="fas fa-arrow-right"></i>
                 </button>
                 {% endif %}

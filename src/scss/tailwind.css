@@ -10,5 +10,45 @@
    (dropdown-item, topactive, search-container, alert-tip, katex, code-tabs)
    keep working alongside Tailwind utilities. */
 @layer components {
+  /* GAF-276 T17: V5 "Animated Atlas" winner theme — dark peat/bone/gold.
+     Ported from src/preview/variant-5/index.html. Sits ABOVE the theme.scss
+     splice point; SCSS output lands below and may refine these. */
+  html, body {
+    background: #141412;
+    color: #efe7d3;
+  }
+  body {
+    font-family: "Source Serif 4", "Iowan Old Style", Georgia, serif;
+    font-feature-settings: "onum", "kern", "liga";
+    -webkit-font-smoothing: antialiased;
+    background-image:
+      radial-gradient(ellipse at 15% 5%, rgba(195,154,58,.09), transparent 45%),
+      radial-gradient(ellipse at 85% 92%, rgba(108,122,68,.08), transparent 55%);
+  }
+  ::selection { background: rgba(195,154,58,.28); color: #efe7d3; }
+  #progress {
+    position: fixed; top: 0; left: 0; height: 3px;
+    background: linear-gradient(90deg, #8f6d1e, #c39a3a, #efe7d3);
+    width: 0%; z-index: 100; transition: width .05s linear;
+    box-shadow: 0 0 12px rgba(195,154,58,.6);
+  }
+  #splash-screen { background-color: #141412; }
+
+  .display { font-family: "Cormorant", "Cormorant Garamond", Georgia, serif; font-weight: 500; letter-spacing: -.01em; }
+  .display-i { font-family: "Cormorant", "Cormorant Garamond", Georgia, serif; font-style: italic; font-weight: 500; }
+  .mono { font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace; letter-spacing: .02em; }
+  .figures { font-variant-numeric: tabular-nums lining-nums; }
+  .oldfig { font-variant-numeric: oldstyle-nums tabular-nums; }
+  .rule { background: rgba(239,231,211,.14); height: 1px; }
+  .rule-gold { background: linear-gradient(90deg, transparent 0, #c39a3a 15%, #c39a3a 85%, transparent 100%); height: 1px; }
+  .plate { background: linear-gradient(180deg, #1c1b17 0%, #17161300 100%); box-shadow: 0 30px 60px -40px rgba(0,0,0,.7); }
+  .plate-deep { background: linear-gradient(180deg, #221f19 0%, #16150f 100%); box-shadow: 0 40px 80px -40px rgba(0,0,0,.7); }
+  .btn-primary { background: #c39a3a; color: #141412; }
+  .btn-primary:hover { background: #efe7d3; }
+  .btn-ghost { color: #efe7d3; }
+  .btn-ghost:hover { color: #c39a3a; }
+  .hero-title { font-size: clamp(3.4rem, 10vw, 8rem); line-height: .9; }
+  .gold { color: #c39a3a; }
+  .mist { color: #a9a293; }
   /*__THEME_SCSS_INLINE__*/
 }

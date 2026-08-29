@@ -6,7 +6,7 @@
       {% set isHomepage = entry.url == '/' %}
       {% set isActive = page.url | startsWith(entry.url) %}
       {% if isActive and not isHomepage %}
-        &nbsp;&frasl;&nbsp;<i class="fa-solid fa-{{ entry.icon }}"></i>{% if entry.url != page.url %}<a href="{{ entry.url }}" class="no-underline">{% else %}<span class="font-bold text-ink/50">{% endif %}{{ entry.shorttitle or entry.title }}{% if entry.url != page.url %}</a>{% else %}</span>{% endif %}
+        &nbsp;&frasl;&nbsp;<i class="fa-solid fa-{{ entry.icon }}"></i>{% if entry.url != page.url %}<a href="{{ entry.url }}" class="no-underline">{% else %}<span class="font-bold text-mist">{% endif %}{{ entry.shorttitle or entry.title }}{% if entry.url != page.url %}</a>{% else %}</span>{% endif %}
       {% endif %}
       {%- if entry.children.length -%}
         {%- for child in entry.children %}

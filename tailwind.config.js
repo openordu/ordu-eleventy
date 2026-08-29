@@ -1,9 +1,9 @@
 /** @type {import('tailwindcss').Config} */
 // GAF-276 openordu-bootstrap-tailwind-design-gauntlet
-// T5 scaffold. Palette here is the pre-design baseline (no indigo drift,
-// real hexes). The deslop 5→3→1 winner (Opus5 via Claude Code, T9/T17)
-// replaces these tokens; this file keeps the site building + purge-safe
-// until then.
+// T17: approved V5 "Animated Atlas" winner (deslop 5→3→1). The semantic
+// token names from the T5 scaffold are KEPT so all 224 template color-class
+// instances keep resolving; their hexes are re-pointed to the dark
+// peat/bone/gold atlas (src/preview/variant-5/index.html :root).
 module.exports = {
   content: [
     './src/**/*.njk',
@@ -28,22 +28,29 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        // Cultural-heritage editorial baseline — earth/moss/peat/ochre.
-        // HARD RULE: no indigo/purple (ban-list colors). Real hexes only.
-        ink:    '#2b2826',   // warm near-black body text (heritage charcoal)
-        paper:  '#faf7f0',   // warm parchment background
-        moss:   '#4a5d43',   // muted Irish green (replaces bootstrap teal)
-        earth:  '#6f5b3e',   // umber/tan (secondary, replaces $blue #4343cc)
-        ochre:  '#a8783a',   // accent gold-ochre (CTA)
-        peat:   '#3a3227',   // deep brown (headers/footer)
-        mist:   '#e6e0d2',   // light warm grey (borders/serifs)
-        bone:   '#fffdf7'    // card/bg highlight
+        // V5 "Animated Atlas" palette. HARD RULE: no indigo/purple (ban-list
+        // colors). Real hexes only. Semantic names retained from the
+        // parchment baseline so existing template classes keep working:
+        ink:    '#efe7d3',   // V5 bone — primary light text
+        paper:  '#141412',   // V5 peat — page background (now dark)
+        moss:   '#6c7a44',   // V5 moss — green accent (borders/CTAs)
+        earth:  '#8f6d1e',   // V5 gold-deep
+        ochre:  '#c39a3a',   // V5 gold — CTA accent
+        peat:   '#1c1b17',   // V5 peat-2 — raised panels/headers
+        mist:   '#a9a293',   // V5 mist — warm grey (borders/muted text)
+        bone:   '#d8cfb7',   // V5 bone-2 — secondary light panels/text
+        // Explicit V5 aliases (T17):
+        gold:      '#c39a3a',
+        'gold-deep': '#8f6d1e',
+        'peat-2':  '#25231e',
+        'peat-3':  '#141412'
       },
       fontFamily: {
-        // Replace "inter" default. Heritage editorial serif body + display.
-        sans: ['Georgia', 'ui-serif', 'serif'],
-        display: ['Georgia', 'Palatino', 'ui-serif', 'serif'],
-        mono: ['ui-monospace', 'SFMono-Regular', 'Menlo', 'monospace']
+        // V5 type system: Source Serif 4 body, Cormorant display,
+        // JetBrains Mono. Wired via Google Fonts in head.njk.
+        sans: ['Source Serif 4', 'Iowan Old Style', 'Georgia', 'serif'],
+        display: ['Cormorant', 'Cormorant Garamond', 'Georgia', 'serif'],
+        mono: ['JetBrains Mono', 'ui-monospace', 'SFMono-Regular', 'Menlo', 'monospace']
       }
     }
   },
