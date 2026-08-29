@@ -50,5 +50,15 @@
   .hero-title { font-size: clamp(3.4rem, 10vw, 8rem); line-height: .9; }
   .gold { color: #c39a3a; }
   .mist { color: #a9a293; }
+  /* GAF-276 T18: hero atlas backdrop — peat-dark left for bone text,
+     gold relief plate showing on the right. */
+  .atlas-hero-bg {
+    background-image:
+      linear-gradient(90deg, rgba(20, 20, 18, 0.93) 0%, rgba(20, 20, 18, 0.6) 45%, rgba(20, 20, 18, 0.18) 100%),
+      url('/assets/hero-atlas.png');
+    background-size: cover;
+    background-position: right center;
+    background-repeat: no-repeat;
+  }
   /*__THEME_SCSS_INLINE__*/
 }
