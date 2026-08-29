@@ -1,10 +1,9 @@
-
 {% include 'snippets/breadcrumbs.njk' %}
 
 <header class="mt-4">
       {# <a name="{{ title | slugify }}" href="#{{ title | slugify }}"><h1 class="display-1 link-fancy">{{ title }}</h1></a> #}
       {% if icon %}
-      <i class="display-1 fa-{{ site.fatheme }} fa-{{ icon }} float-start ps-0 ms-0"></i>
+      <i class="text-5xl font-semibold tracking-tight fa-{{ site.fatheme }} fa-{{ icon }} float-left pl-0 ml-0"></i>
       {% endif %}
       <a name="{{ page.fileSlug }}"><h1 class="pagetitle">{{ title or page.fileSlug | slugify({separator:' ', lowercase: false}) | title }}</h1></a>
 </header>
@@ -24,7 +23,7 @@
 
 {% include 'snippets/category-and-tag-pills.njk' %}
 
-<hr class="border border-primary border-1 opacity-75">
+<hr class="border border-moss opacity-75">
 
 {% include 'snippets/toc.njk' %}
 

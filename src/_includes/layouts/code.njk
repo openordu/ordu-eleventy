@@ -1,5 +1,5 @@
 <!doctype html>
-<html class="h-100" lang="{{ metadata.language }}">
+<html class="h-full" lang="{{ metadata.language }}">
 
   <head>
     {% include 'snippets/head.njk' %}
@@ -9,28 +9,28 @@
 
     {% include 'snippets/navbar.njk' %}
 
-    <main class="container py-vh-5">
-      <div class="row d-flex justify-content-center">
-        <div class="col-12">
+    <main class="mx-auto w-full max-w-6xl px-4 py-vh-5">
+      <div class="grid grid-cols-12 justify-center">
+        <div class="col-span-12">
           <header class="py-4">
-            <h1 class="display-1">{{ title }}</h1>
+            <h1 class="text-5xl font-semibold tracking-tight">{{ title }}</h1>
 
             <hr/>
-            <p class="lead">
+            <p class="text-lg leading-relaxed">
               {{ description }}
             </header>
           </p>
-          <div class="rounded-top border p-4">
+          <div class="rounded-t border p-4">
             {{ content | safe }}
 </div>
-          <div class="bg-light rounded border border-top-0 p-4">
+          <div class="bg-mist/50 rounded border border-t-0 p-4">
                 <code><xmp class="w-auto font-monospace" style="overflow-x:scroll;">{{ content | safe}}</xmp></code>
           </div>
         </div>
       </div>
     </main>
 
-    <footer class="container">
+    <footer class="mx-auto w-full max-w-6xl px-4">
       {% include 'snippets/footer.njk' %}
     </footer>
 

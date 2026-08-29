@@ -23,5 +23,5 @@ permalink: /tags/{{ tag.tagName | slugit }}/
 {% block content %}
   {% set posts = collections[tag.tagName] %}
   {% include 'snippets/tagncatsloop.njk' %}
-  <p>See <a href="{{ '/tags/' | url }}" class="badge badge-primary">all tags</a>.</p>
+  <p>See <a href="{{ '/tags/' | url }}" class="inline-flex items-center rounded-full bg-moss px-2 py-0.5 text-xs text-bone">all tags</a>.</p>
 {% endblock %}

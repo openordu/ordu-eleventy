@@ -17,7 +17,7 @@ searchInput.addEventListener('focus', function() {
         // If input is empty, clear suggestions and hide container
         if (!searchTerm) {
           suggestionContainer.innerHTML = '';
-          suggestionContainer.classList.add("d-none");
+          suggestionContainer.classList.add("hidden");
           return;
         }
 
@@ -55,10 +55,10 @@ searchInput.addEventListener('focus', function() {
         // Add new suggestions
         results.forEach(function(result) {
           var listItem = document.createElement("li");
-          listItem.classList.add("text-truncate");
+          listItem.classList.add("truncate");
           listItem.innerHTML = `<a class="dropdown-item" href="${result.doc.id}">${result.doc.title}</a>`;
           suggestionContainer.appendChild(listItem);
-          suggestionContainer.classList.remove("d-none");
+          suggestionContainer.classList.remove("hidden");
         });
       });
     });

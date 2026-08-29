@@ -1,5 +1,5 @@
 <!doctype html>
-<html class="h-100" lang="{{ metadata.language }}">
+<html class="h-full" lang="{{ metadata.language }}">
 
   <head>
     {% include 'snippets/head.njk' %}
@@ -9,20 +9,20 @@
     {% include 'snippets/svg.njk' %}
     {% include 'snippets/navbar-with-side.njk' %}
 
-    <main class="container min-vw-100 py-vh-1">
-      <div class="row align-items-start">
-        <div class="min-vw-100 row d-flex justify-content-center">
-            <div class="overflow-auto col col-12 col-sm-3 flex-shrink-0 p-2 bg-white">
+    <main class="mx-auto w-full max-w-6xl px-4 py-vh-1">
+      <div class="grid grid-cols-12 items-start">
+        <div class="w-full grid grid-cols-12 justify-center">
+            <div class="overflow-auto col-span-12 sm:col-span-3 shrink-0 p-2 bg-paper">
               {% include 'snippets/sidebar.njk' %}
             </div>
-            <div class="overflow-auto col col-12 col-sm-9">
+            <div class="overflow-auto col-span-12 sm:col-span-9">
               {% include 'snippets/maincontent.njk' %}
             </div>
         </div>
       </div>
     </main>
 
-    <footer class="container">
+    <footer class="mx-auto w-full max-w-6xl px-4">
       {% include 'snippets/footer.njk' %}
     </footer>
 

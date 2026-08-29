@@ -1,9 +1,9 @@
 {% set toc = content | safe | extractHeadings %}
 
 {% if toc %}
-  <aside id="headings" class="mx-2 mb-1 px-3 py-1 bg-light float-end col-12 col-md-6 col-lg-4 overflow-auto">
+  <aside id="headings" class="mx-2 mb-1 px-3 py-1 bg-mist/50 float-right col-span-12 md:col-span-6 lg:col-span-4 overflow-auto">
     <h3>Contents</h3>
-    <div id="toc" class="ps-1 text-truncate">
+    <div id="toc" class="pl-1 truncate">
       {{ toc | safe }}
     </div>
   </aside>

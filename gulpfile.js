@@ -13,10 +13,9 @@ var exec        = require('child_process').exec;
 var cfg = require( './gulpconfig.json' );
 var paths = cfg.paths;
 
-// GAF-276 T6: Tailwind v3 build. Tailwind OWNS theme.min.css (the exact path
-// inject-min-css serves). Produces the minified Tailwind artifact directly via
-// the CLI (--minify), so the sass minify-css glob must EXCLUDE theme.min.css
-// or it would clobber the Tailwind output with the old Bootstrap min.
+// GAF-276 T15: Tailwind v3 build. Tailwind OWNS theme.min.css (the exact path
+// inject-min-css serves). merge-theme later inlines the custom theme SCSS
+// into the SAME artifact — one stylesheet, both vocabularies.
 gulp.task('tailwind', function (done) {
   exec(
     'npx tailwindcss -i src/scss/tailwind.css -c tailwind.config.js -o dev/css/theme.min.css --minify',
@@ -44,11 +43,51 @@ gulp.task('prod-copy', function () {
     .pipe(gulp.dest('./public/'));
 });
 
+// GAF-276 T15: single-artifact merge. Reads dev/css/theme.css (dart-sass
+// output of theme.scss), inlines it into the tailwind artifact at the
+// /*__THEME_SCSS_INLINE__*/ slot inside @layer components in
+// src/scss/tailwind.css, and RE-RUNS the tailwind CLI so the final
+// theme.min.css contains BOTH tailwind utilities and the custom theme CSS.
+// Re-running tailwind after the sass splice is required: tailwindcss CLI
+// processes @layer at compile time.
+gulp.task('merge-theme', function (done) {
+  var fs = require('fs');
+  var input = 'src/scss/tailwind.css';
+  var sassOut = 'dev/css/theme.css';
+  var marker = '/*__THEME_SCSS_INLINE__*/';
+  var base = fs.readFileSync(input, 'utf8');
+  var scss;
+  try {
+    scss = fs.readFileSync(sassOut, 'utf8');
+  } catch (e) {
+    return done(new Error('merge-theme: ' + sassOut + ' missing — run gulp sass first'));
+  }
+  if (base.indexOf(marker) === -1) {
+    return done(new Error('merge-theme: marker missing in ' + input));
+  }
+  fs.writeFileSync(input, base.replace(marker, '\n' + scss + '\n'));
+  exec(
+    'npx tailwindcss -i src/scss/tailwind.css -c tailwind.config.js -o dev/css/theme.min.css --minify',
+    { cwd: __dirname, maxBuffer: 10 * 1024 * 1024 },
+    function (err, stdout, stderr) {
+      if (err) { console.error('merge-theme tailwind pass failed: ' + stderr); return done(err); }
+      // Restore the marker so the input stays re-runnable and uncommitted
+      // churn stays minimal.
+      fs.writeFileSync(input, base);
+      if (stdout) console.log(stdout.trim());
+      console.log('merge-theme: theme.scss inlined into theme.min.css');
+      done();
+    }
+  );
+});
+
+// GAF-276 T15: Tailwind owns the theme.min.css artifact. Order: eleventy →
+// tailwind (artifact from src/scss/tailwind.css) → sass (theme.css) →
+// dist-assets → merge-theme (inline sass output into the tailwind artifact)
+// → minify-css (guarded no-clobber) → prod-copy → inject-min-css.
 gulp.task('minify-css', () => {
-  // GAF-276 T6: EXCLUDE theme.min.css — Tailwind's 'tailwind' task owns it.
-  // The sass glob must not re-minify Tailwind's output into theme.min.css.
   return gulp
-    .src(['dev/css/*.css', '!dev/css/theme.min.css'])
+    .src(['dev/css/*.css', '!dev/css/theme.css', '!dev/css/theme.min.css'])
     .pipe(cleanCSS({
       compatibility: 'ie8'
     }))

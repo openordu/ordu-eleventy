@@ -1,6 +1,14 @@
-/* GAF-276 openordu-bootstrap-tailwind-design-gauntlet
-   T6: Tailwind v3 input. Compiled by the gulp 'tailwind' task to
-   dev/css/theme.min.css (the exact path inject-min-css serves). */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* GAF-276 T15: single-artifact contract. Tailwind owns theme.min.css; the
+   custom theme SCSS (variables + custom fonts + style-theme + font-awesome)
+   is compiled by dart-sass into theme.css, then INLINED here via @layer
+   components. Gulp concatenates it into the artifact (no-clobber guard on
+   minify-css). One <link>, both vocabularies served, semantic classes
+   (dropdown-item, topactive, search-container, alert-tip, katex, code-tabs)
+   keep working alongside Tailwind utilities. */
+@layer components {
+  /*__THEME_SCSS_INLINE__*/
+}

@@ -1,41 +1,41 @@
-<nav class="navbar navbar-expand-lg navbar-light pt-0">
-  <div class="container d-flex justify-content-between">
+<nav class="border-b border-mist bg-paper p-0">
+  <div class="mx-auto flex max-w-6xl items-center justify-between px-4">
     <!-- Hamburger Menu -->
-    <div>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <div class="lg:hidden">
+        <button class="inline-flex items-center border rounded p-2 text-ink" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span><i class="fas fa-caret-down"></i></span>
         </button>
-        <button class="navbar-toggler bg-primary text-white" type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebar">
-            <span class="text-primary bg-white"><i class="fas fa-bars"></i></span>
+        <button class="inline-flex items-center border rounded p-2 bg-moss text-bone" type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebar">
+            <span class="text-moss bg-bone"><i class="fas fa-bars"></i></span>
         </button>
     </div>
 
     <!-- Logo -->
-    <a class="navbar-brand mb-0 py-2 px-2 pt-2 pe-3 text-center text-white bg-primary" href="{{ '/' | url }}">
-        <svg class="me-1 small-logo-white"><image xlink:href="{{ "/assets/logo.svg" | url }}" width="96" height="96" /></svg>
-        <span class="logotitle d-none d-sm-block">{{ metadata.logotitle }}</span>
+    <a class="mb-0 inline-flex items-center gap-2 rounded bg-moss px-2 py-2 pt-2 pr-3 text-center text-bone" href="{{ '/' | url }}">
+        <svg class="mr-1 small-logo-white"><image xlink:href="{{ "/assets/logo.svg" | url }}" width="96" height="96" /></svg>
+        <span class="logotitle hidden sm:block">{{ metadata.logotitle }}</span>
     </a>
 
     <!-- Navigation Links and Search Bar -->
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-            <li class="nav-item d-flex me-1">
-                <i class="icon fa-solid fa-house pt-2"></i><a class="nav-link" aria-current="page" href="{{ '/' | url }}">Home</a>
+    <div class="hidden lg:block" id="navbarSupportedContent">
+        <ul class="flex flex-wrap items-center gap-1 ml-2 mb-2 lg:mb-0">
+            <li class="flex items-center mr-1">
+                <i class="icon fa-solid fa-house pt-2"></i><a class="px-2 py-1 text-ink hover:bg-mist rounded" aria-current="page" href="{{ '/' | url }}">Home</a>
             </li>
-            <li class="nav-item d-flex me-1">
-                <i class="icon fa-solid fa-book pt-2"></i><a class="nav-link" href="{{ '/pce' | url }}">PCE</a>
+            <li class="flex items-center mr-1">
+                <i class="icon fa-solid fa-book pt-2"></i><a class="px-2 py-1 text-ink hover:bg-mist rounded" href="{{ '/pce' | url }}">PCE</a>
             </li>
-            <li class="nav-item d-flex me-1">
-                <i class="icon fa-solid fa-circle-info pt-2"></i><a class="nav-link" href="{{ '/about' | url }}">About</a>
+            <li class="flex items-center mr-1">
+                <i class="icon fa-solid fa-circle-info pt-2"></i><a class="px-2 py-1 text-ink hover:bg-mist rounded" href="{{ '/about' | url }}">About</a>
             </li>
-            <li class="nav-item d-flex me-1">
-                <i class="icon fa-solid fa-blog pt-2"></i><a class="nav-link" href="{{ '/blog' | url }}">Blog</a>
+            <li class="flex items-center mr-1">
+                <i class="icon fa-solid fa-blog pt-2"></i><a class="px-2 py-1 text-ink hover:bg-mist rounded" href="{{ '/blog' | url }}">Blog</a>
             </li>    
             <!-- Search Form -->
-            <li class="nav-item d-flex">
-                <form class="search-container d-flex">
-                    <input type="search" id="search-input" class="form-control" autocomplete="off" placeholder="Search">
-                    <ul class="dropdown-menu d-none" id="search-suggestions"></ul>
+            <li class="flex items-center">
+                <form class="search-container flex">
+                    <input type="search" id="search-input" class="rounded border border-mist bg-paper px-3 py-1 text-ink placeholder:text-ink/60 focus:border-ochre focus:outline-none" autocomplete="off" placeholder="Search">
+                    <ul id="search-suggestions" class="hidden absolute"></ul>
                 </form>
             </li>
         </ul>

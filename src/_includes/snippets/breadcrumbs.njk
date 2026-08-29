@@ -1,17 +1,19 @@
-  {% if breadcrumbs != false %}
+{% if breadcrumbs != false %}
   <div>
   {% set navPages = collections.all | eleventyNavigation %}
-  <i class="fa-solid fa-home"></i><a href="/" class="text-decoration-none"> Home</a>
+  <i class="fa-solid fa-home"></i><a href="/" class="no-underline"> Home</a>
     {% macro renderBreadCrumbList(entry, sub) -%}
       {% set isHomepage = entry.url == '/' %}
       {% set isActive = page.url | startsWith(entry.url) %}
       {% if isActive and not isHomepage %}
-        &nbsp;&frasl;&nbsp;<i class="fa-solid fa-{{ entry.icon }}"></i>{% if entry.url != page.url %}<a href="{{ entry.url }}" class="text-decoration-none">{% else %}<span class="fw-bold text-muted">{% endif %}{{ entry.shorttitle or entry.title }}{% if entry.url != page.url %}</a>{% else %}</span>{% endif %}
+        &nbsp;&frasl;&nbsp;<i class="fa-solid fa-{{ entry.icon }}"></i>{% if entry.url != page.url %}<a href="{{ entry.url }}" class="no-underline">{% else %}<span class="font-bold text-ink/50">{% endif %}{{ entry.shorttitle or entry.title }}{% if entry.url != page.url %}</a>{% else %}</span>{% endif %}
       {% endif %}
       {%- if entry.children.length -%}
         {%- for child in entry.children %}
           {{
+
             renderBreadCrumbList(child, sub + 1)
+
           }}
         {% endfor -%}
 
@@ -19,7 +21,9 @@
   {%- endmacro %}
   {%- for entry in navPages %}
     {{
+
       renderBreadCrumbList(entry)
+
     }}
   {%- endfor -%}
 </div>

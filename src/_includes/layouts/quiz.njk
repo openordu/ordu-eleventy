@@ -1,30 +1,30 @@
 <!doctype html>
-<html class="h-100" lang="{{ metadata.language }}">
+<html class="h-full" lang="{{ metadata.language }}">
 
   <head>
     {% include 'snippets/head.njk' %}
   </head>
 
-  <body class="h-100">
+  <body class="h-full">
 
     {% include 'snippets/navbar-with-side.njk' %}
 
-    <main class="container">
-      <div class="row d-flex align-items-start">
-        <div class="row d-flex justify-content-center">
-            <div class="aside col col-12 col-sm-3 flex-shrink-0 p-2 bg-white">
+    <main class="mx-auto w-full max-w-6xl px-4">
+      <div class="grid grid-cols-12 items-start">
+        <div class="grid grid-cols-12 justify-center">
+            <div class="aside col-span-12 sm:col-span-3 shrink-0 p-2 bg-paper">
               {% include 'snippets/sidebar.njk' %}
             </div>
-            <div id="main" class="main col col-12 col-sm-9 pb-5">
+            <div id="main" class="main col-span-12 sm:col-span-9 pb-5">
               {% include 'snippets/maincontent.njk' %}
             </div>
             {# <div id="result" class="text-center mt-4"></div>
-            <button id="nextBtn" class="btn btn-primary mt-4">Next</button> #}
+            <button id="nextBtn" class="inline-flex items-center rounded bg-moss px-4 py-2 text-bone mt-4">Next</button> #}
         </div>
       </div>
     </main>
 
-    <footer class="container">
+    <footer class="mx-auto w-full max-w-6xl px-4">
       {% include 'snippets/quiz-footer.njk' %}
     </footer>
   </body>

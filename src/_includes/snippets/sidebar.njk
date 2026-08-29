@@ -6,32 +6,32 @@
     {% set isActive = page.url | startsWith(entry.url) %}
     {% set hasChildren = entry.children.length > 0 %}
     {% set isSame = entry.url == page.url %}
-    <li class="mb-0 d-grid gap-0 py-0 ps-0">
+    <li class="mb-0 grid gap-0 py-0 pl-0">
       {% if hasChildren and not isActive %}
-        <a href="{{ entry.url | url }}" class="dropdown-item overflow-hidden text-start mb-0 ps-1 w-100 py-2 {% if sub %}sub{% else %}top{% endif %} {% if isHomepage and entry.url == page.url %}active{% endif %} {% if sub and not hasChildren %}subject{% else %}parentsubject{% endif %} rounded text-decoration-none">
-          <i class="fa-solid fa-{{ entry.icon }} {% if sub %}ps-{{ sub }}{% endif %}"></i>
+        <a href="{{ entry.url | url }}" class="dropdown-item block w-full px-3 py-2 text-left rounded hover:bg-mist overflow-hidden mb-0 pl-1 {% if sub %}sub{% else %}top{% endif %} {% if isHomepage and entry.url == page.url %}active{% endif %} {% if sub and not hasChildren %}subject{% else %}parentsubject{% endif %} no-underline">
+          <i class="fa-solid fa-{{ entry.icon }} {% if sub %}pl-{{ sub }}{% endif %}"></i>
           {{ entry.shorttitle or entry.title }}
         </a>
       {% else %}
-        <button {% if hasChildren %}data-bs-toggle="collapse" data-bs-target="#{{ entry.title | slugify }}-collapse"{% else %}onclick="location.href='{{ entry.url | url }}';" type="button" {% endif %} class="dropdown-item overflow-hidden btn text-start mb-0 ps-1 w-100 py-2
+        <button {% if hasChildren %}data-bs-toggle="collapse" data-bs-target="#{{ entry.title | slugify }}-collapse"{% else %}onclick="location.href='{{ entry.url | url }}';" type="button" {% endif %} class="dropdown-item block w-full px-3 py-2 text-left rounded hover:bg-mist overflow-hidden mb-0 pl-1
         {% if sub %}sub{% else %}top{% endif %}
         {% if isSame and not isHomepage %}active{% endif %}
         {% if hasChildren %}parent btn-toggle{% endif %}
         {% if sub and not hasChildren %}subject{% else %}parentsubject{% endif %}
-        rounded"
+        no-underline"
         {% if entry.url == page.url %}
         aria-current="page"
         {% endif %}
         aria-expanded="{% if hasChildren and entry.url == page.url and isActive %}true{% endif %}" style="text-overflow: ellipsis; margin: -2px 0px">
-          <i {% if hasChildren %}type="button" data-bs-toggle="collapse" data-bs-target="#{{ entry.title | slugify }}-collapse"{% endif %} class="fa-solid {% if hasChildren and isActive %}fa-angle-down{% endif %}{% if hasChildren and not isActive %}fa-angle-right{% endif %}{% if not hasChildren %}fa-{{ entry.icon }}{% endif %} {% if sub %}ps-{{ sub }}{% endif %}">
-            </i><a href="{{ entry.url | url }}" class="text-decoration-none">
+          <i {% if hasChildren %}type="button" data-bs-toggle="collapse" data-bs-target="#{{ entry.title | slugify }}-collapse"{% endif %} class="fa-solid {% if hasChildren and isActive %}fa-angle-down{% endif %}{% if hasChildren and not isActive %}fa-angle-right{% endif %}{% if not hasChildren %}fa-{{ entry.icon }}{% endif %} {% if sub %}pl-{{ sub }}{% endif %}">
+            </i><a href="{{ entry.url | url }}" class="no-underline">
             {{ entry.shorttitle or entry.title }}
             </a>
           </button>
       {% endif %}
       {%- if hasChildren and isActive -%}
-        <div class="m-0 p-0 {% if isActive %}collapse show{% else %}collapse{% endif %}" id="{{ entry.title | slugify }}-collapse">
-          <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+        <div class="m-0 p-0 {% if isActive %}block{% else %}hidden{% endif %}" id="{{ entry.title | slugify }}-collapse">
+          <ul class="btn-toggle-nav flex flex-col pl-2 list-none font-normal pb-1 small">
             {%- for child in entry.children %}{{
               renderSidebarListItem(child, sub + 1)
             }}
@@ -43,13 +43,13 @@
   {% endif %}
 {%- endmacro %}
 
-<div class="offcanvas offcanvas-start flex-shrink-0" id="sidebar" data-bs-scroll="true" data-bs-backdrop="false" tabindex="-1">
-    <div class="offcanvas-header d-lg-none">
-      <h5 class="offcanvas-title">Navigation</h5>
-      <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+<div class="offcanvas" data-offcanvas id="sidebar" tabindex="-1">
+    <div class="flex items-center justify-between lg:hidden">
+      <h5 class="font-semibold">Navigation</h5>
+      <button type="button" class="inline-flex items-center justify-center rounded text-ink hover:bg-mist" data-bs-dismiss="offcanvas" aria-label="Close"></button>
     </div>
-    <div class="offcanvas-body">
-      <ul class="navbar-nav justify-content-end flex-grow-1">
+    <div class="py-3">
+      <ul class="flex flex-col justify-end grow">
         {%- for entry in navPages %}
           {{ renderSidebarListItem(entry) }}
         {%- endfor -%}

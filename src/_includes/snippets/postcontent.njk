@@ -1,6 +1,6 @@
 <article>
-  <header class="border-bottom pb-4 mb-4">
-    <h1 class="display-1">{{ title }}</h1>
+  <header class="border-b pb-4 mb-4">
+    <h1 class="text-5xl font-semibold tracking-tight">{{ title }}</h1>
     {% block extraArticleHeader %}
       {% set wc = content | striptags | wordcount %}
       {% set wPerMinute = (wc / 240) + 1 %}
@@ -19,12 +19,12 @@
       <script src="/js/timeAgo.js"></script>
       {%- for tag in tags | filterTagList -%}
         {%- set tagUrl %}/tags/{{ tag | slugify }}/{% endset -%}
-        <a href="{{ tagUrl | url }}" class="btn btn-outline-dark btn-sm me-2">{{ tag }}</a>
+        <a href="{{ tagUrl | url }}" class="inline-flex items-center justify-center rounded border border-earth px-3 py-1 text-sm text-ink hover:bg-earth hover:text-bone mr-2">{{ tag }}</a>
       {%- endfor %}
 
     {% endblock %}
   </header>
-  <p class="lead">
+  <p class="text-lg leading-relaxed">
     {{ summary }}
   </p>
   {{ content | safe }}
