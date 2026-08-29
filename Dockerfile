@@ -25,8 +25,8 @@ ENV ELEVENTY_ENV=production
 # Build the Eleventy site
 RUN eleventy
 
-# Generate images and CSS
-RUN gulp dist-assets && gulp sass
+# Generate images and CSS (GAF-276: tailwind owns theme.min.css — run it FIRST)
+RUN gulp dist-assets && gulp tailwind && gulp sass
 
 # Use an official Node.js runtime as a parent image
 FROM node:16-alpine
