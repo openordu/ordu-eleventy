@@ -60,5 +60,65 @@
     background-position: right center;
     background-repeat: no-repeat;
   }
+  /* GAF-276 T20: content-layer plugin compat. markdown-it-ordu / quiz /
+     tips are unmodifiable scope-locked plugins that emit this
+     markup from .md content. The old framework owned their show/hide + carousel
+     mechanics before; the vanilla shim (tailwind-interactions.js) owns the
+     behavior now, and these rules own the geometry. V5 register kept. */
+  .carousel-item { display: none; }
+  .carousel-item.active { display: block; }
+  .collapse { display: none; }
+  .collapse.show { display: block; }
+  /* plugin tips triggers also carry alert-info + btn-link on the <a> */
+  .alert-info {
+    color: #a9a293;
+    border-left: 2px solid #6c7a44;
+  }
+  .lead { font-size: 1.15rem; }
+  /* GAF-276 T20 round 2 — quiz option buttons (markdown-it-quiz emits
+     button.btn.btn-outline-primary.list-group-item[-action]). The old
+     substrate owned these before; the compat layer owns them now.
+     V5 register: bone outline, gold hover, moss correct-state
+     (colors live in the #quiz block). */
+  .btn { cursor: pointer; }
+  .btn-outline-primary {
+    display: block; width: 100%; text-align: left;
+    background: transparent; border: 1px solid #a9a293; border-radius: .25rem;
+    color: #efe7d3; padding: .5rem .75rem; margin-bottom: .25rem; cursor: pointer;
+  }
+  .btn-outline-primary:hover { border-color: #c39a3a; color: #c39a3a; }
+  .list-group-item-action { width: 100%; }
+  /* carousel controls (markdown-it-ordu emits them per docs page) */
+  .carousel { position: relative; }
+  .carousel-control-prev, .carousel-control-next {
+    position: absolute; top: 0; bottom: 0; width: 15%;
+    display: flex; align-items: center; justify-content: center;
+    background: none; border: 0; cursor: pointer; opacity: .8;
+  }
+  .carousel-control-prev { left: 0; }
+  .carousel-control-next { right: 0; }
+  .carousel-control-prev-icon, .carousel-control-next-icon {
+    display: inline-block; width: 1.5rem; height: 1.5rem;
+    background-color: #c39a3a; border-radius: 50%;
+  }
+  /* GAF-276 T20: alert variants the tips plugins emit (info/danger/warning).
+     V5 register: moss = tip-positive, gold-deep = danger, ochre = warning. */
+  .alert-warning { color: #c39a3a; border-left: 2px solid #c39a3a; }
+  .alert-danger { color: #e06c5a; border-left: 2px solid #b52f0d; }
+  .alert-primary { color: #c39a3a; border-left: 2px solid #c39a3a; }
+  .visually-hidden {
+    position: absolute !important;
+    width: 1px; height: 1px;
+    padding: 0; margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+  .d-flex { display: flex; }
+  .justify-content-center { justify-content: center; }
+  .align-items-center { align-items: center; }
+  .h-100 { height: 100%; }
+  .carousel-caption { position: static; }
   /*__THEME_SCSS_INLINE__*/
 }

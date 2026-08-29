@@ -52,6 +52,22 @@ gulp.task('prod-copy', function () {
 // processes @layer at compile time.
 gulp.task('merge-theme', function (done) {
   var fs = require('fs');
+  // GAF-276 T20: sync the BUILT pages (minus the deslop /preview/ evidence
+  // pages) into .twscan/ BEFORE the tailwind pass. The content globs scan
+  // this snapshot: the plugins emit their markup at build time, so classes
+  // that exist only in plugin output (tab-content, nav-tabs, quiz buttons,
+  // carousel controls) are otherwise purged from the artifact. Eleventy runs
+  // earlier in the chain, so dev/ is always fresh at this point.
+  var execSync = require('child_process').execSync;
+  try {
+    execSync(
+      'rsync -a --delete --prune-empty-dirs --exclude "preview/" ' +
+      "--include '*/' --include '*.html' --exclude '*' dev/ .twscan/",
+      { cwd: __dirname, stdio: 'ignore' }
+    );
+  } catch (e) {
+    return done(new Error('merge-theme: .twscan sync failed — is rsync installed?'));
+  }
   var input = 'src/scss/tailwind.css';
   var sassOut = 'dev/css/theme.css';
   var marker = '/*__THEME_SCSS_INLINE__*/';
@@ -177,18 +193,9 @@ gulp.task('inject-min-css', function(done) {
          done();
 });
 
-////////////////// All Bootstrap SASS  Assets /////////////////////////
-gulp.task( 'copy-assets', function( done ) {
-	// GAF-276 T16: ONLY the JS copy remains. The Bootstrap SCSS copy block was
-	// REMOVED — it re-created src/scss/assets/bootstrap (a deleted-orphan tree)
-	// on every `npm ci` postinstall. theme.scss has no import of it (T13) and
-	// nothing references the path, so copying it back is dead activity that
-	// muddies the tree. JS bundle copy is kept (src/js/bootstrap.bundle.* are
-	// tracked files).
-	// Copy all JS files
-	var stream = gulp
-		.src( paths.node + '/bootstrap/dist/js/**/*.*' )
-		.pipe( gulp.dest( paths.dev + '/js' ) );
-
-	done();
-} );
+// GAF-276 T20: copy-assets retired. The ONLY thing it still copied was
+// the vendored dist JS bundles -> dev/js (postinstall), dead since T15's
+// vanilla shim replaced the old interaction layer and T20 deleted both
+// the vendored src/js bundle files and the npm dep. dist-assets copies
+// src/js/** to dev/js; nothing imports the old bundles. The task is
+// removed; postinstall no longer runs it (package.json updated with it).

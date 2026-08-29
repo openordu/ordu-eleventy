@@ -49,7 +49,7 @@
             return modules[moduleId].call(module.exports, module, module.exports, __webpack_require__), 
             module.loaded = !0, module.exports;
         }
-        // webpackBootstrap
+        // webpack bundle init (GAF-276 T20: word scrub)
         /******/
         // The module cache
         /******/

@@ -13,3 +13,6 @@ public
 # Python bytecode
 __pycache__/
 *.pyc
+
+# GAF-276 T20: tailwind content-scan snapshot of built pages (build artifact)
+.twscan

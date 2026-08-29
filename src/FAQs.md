@@ -21,7 +21,7 @@ github account to a list of contributors who have access to work within our own
 project.
 
 ## What are the technical components used in the project?
-The project is built on **Nodejs**, [11ty](http://11ty.dev), **Bootstrap**, **Nunjucks**,
+The project is built on **Nodejs**, [11ty](http://11ty.dev), **Tailwind CSS**, **Nunjucks**,
 and **Markdown**. These technologies form the foundation for the development of a
 high-quality hyper-accessible website and associated tools. Additionally, there
 are supporting custom **Nodejs** modules, components and filters utilized to

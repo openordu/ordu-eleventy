@@ -8,7 +8,20 @@ module.exports = {
   content: [
     './src/**/*.njk',
     './src/_includes/**/*.njk',
-    './src/**/*.html'
+    './src/**/*.html',
+    './src/**/*.md',
+    // GAF-276 T20 root-cause fix: the scope-locked plugins (markdown-it-ordu/
+    // quiz/tabs/footnote/texmath) and PCE templates emit their markup at BUILD
+    // time, after the content scan of src/ — every class that exists only in
+    // plugin output (tab-content, nav-tabs, tab-pane, quiz option buttons,
+    // carousel controls, katex scaffolding) purged out of the artifact. The
+    // build runs eleventy BEFORE both tailwind passes (gulpfile build chain),
+    // so scanning the built pages catches the real, final class vocabulary.
+    // Negated globs are NOT supported in the v3 content array — the raw
+    // dev/** glob would pull the 5 deslop /preview/ pages (which DESCRIBE
+    // Bootstrap) back into the vocabulary. The build syncs dev pages minus
+    // preview into this snapshot dir before the tailwind passes run.
+    './.twscan/**/*.html'
   ],
   // PLANK: markdown-it-ordu/quiz/tips-bootstrap emit Bootstrap markup from
   // the CONTENT layer (unmodifiable scope-lock). Safelist the classes those
@@ -23,7 +36,10 @@ module.exports = {
     // are omitted — those get skinned via real utilities at T13-T17.
     'shine', 'pulsate', 'sticky', 'search-suggestions',
     'list-group-item-danger', 'list-group-item-primary',
-    'collapsed', 'collapse', 'active', 'show', 'collapsing'
+    'collapsed', 'collapse', 'active', 'show', 'collapsing',
+    // T20: the shim's toggle state class — added/removed at RUNTIME by
+    // tailwind-interactions.js (classList), invisible to every content glob.
+    'hidden'
   ],
   theme: {
     extend: {
