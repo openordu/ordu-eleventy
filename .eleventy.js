@@ -50,7 +50,11 @@ module.exports = function(eleventyConfig) {
   // GAF-296 T4: setDataDeepMerge was REMOVED in Eleventy 2.0 (deep data merge is
   // the default behavior since 2.0; the v1 opt-in call is a v3 boot error).
   // eleventyConfig.setDataDeepMerge(true);
-  eleventyConfig.addPlugin(eleventyNavigationPlugin);
+  // GAF-276 merge fix (2026-08-29): the origin/master merge kept this addPlugin
+  // but dropped the duplicate `eleventyNavigationPlugin` alias import. Same
+  // module, one import: use the surviving `navigationPlugin` binding (also the
+  // canonical handle the navTree collection below documents).
+  eleventyConfig.addPlugin(navigationPlugin);
   eleventyConfig.addPlugin(rssPlugin);
   eleventyConfig.addFilter("cdataSafe", (content) =>
     String(content).split("]]>").join("]]]]><![CDATA[>")

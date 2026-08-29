@@ -121,9 +121,9 @@
   .h-100 { height: 100%; }
   .carousel-caption { position: static; }
   /* GAF-276 T21: caption text must clear the absolutely-positioned 15%-wide
-     side controls instead of sliding under them (exceeds old Bootstrap parity,
-     which had this exact defect). Inset tracks the control width (15% of the
-     item box) plus a small gap, so it clears at every viewport width. */
+     side controls instead of sliding under them (exceeds the old framework's
+     parity, which had this exact defect). Inset tracks the control width (15%
+     of the item box) plus a small gap, so it clears at every viewport width. */
   .carousel-item > * { margin-inline: calc(15% + 0.5rem); }
   /* GAF-276 T21: the controls' .visually-hidden "Previous"/"Next" text is
      clip-hidden but its glyph boxes still yield ~62px layout range rects that
