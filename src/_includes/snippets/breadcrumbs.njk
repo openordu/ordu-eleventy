@@ -1,6 +1,6 @@
 {% if breadcrumbs != false %}
   <div>
-  {% set navPages = collections.all | eleventyNavigation %}
+  {% set navPages = collections.navTree %}
   <i class="fa-solid fa-home"></i><a href="/" class="no-underline"> Home</a>
     {% macro renderBreadCrumbList(entry, sub) -%}
       {% set isHomepage = entry.url == '/' %}

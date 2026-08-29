@@ -16,17 +16,7 @@ const markdownItAnchor                = require("markdown-it-anchor");
 const markdownItFootnote              = require("markdown-it-footnote");
 const markdownItContainer             = require("markdown-it-container");
 const markdownItTaskLists             = require("markdown-it-task-lists");
-const EleventyNavigationCore          = require("@11ty/eleventy-navigation/eleventy-navigation.js");
-// PERF (GAF-276 T7b root cause): the eleventyNavigation filter runs
-// findNavigationEntries over its whole `nodes` collection on EVERY invocation.
-// sidebar/breadcrumbs call it with collections.all and prevnext-date calls it
-// with collections.sortedPosts, 3-4x per page across ~3280 pages => ~10k full
-// scans => >11min. The two collection trees are STABLE for the whole build, so
-// cache one tree per distinct collection reference (WeakMap keyed on nodes).
-// Two distinct collections (all / sortedPosts) legitimately produce different
-// trees, so a single unbounded cache would be WRONG — this keys on the exact
-// collection so each tree is computed once and reused byte-identical.
-const _navTreeCache = new WeakMap();
+const navigationPlugin                = require("@11ty/eleventy-navigation");
 const markdownItTableOfContents       = require("markdown-it-table-of-contents");
 const markdownItMark                  = require("markdown-it-mark");
 const markdownItQuiz                  = require('markdown-it-quiz');
@@ -57,27 +47,14 @@ const removeAccents = (str) => {
 }
 
 module.exports = function(eleventyConfig) {
-  eleventyConfig.setDataDeepMerge(true);
-  // GAF-276 T7b ROOT CAUSE: the eleventy-navigation plugin's filter shadows our
-  // same-name addFilter override (Eleventy 1.0.1, addPlugin filters win the
-  // merge), so the plugin's O(P*N) findNavigationEntries kept running per page.
-  // Fix: do NOT register the plugin; register ONLY our memoized filter. The
-  // templates use only the base `eleventyNavigation` filter (verified grep —
-  // no breadcrumb/toHtml/markdown variants, eleventyComputed.js data is not a
-  // filter use). The nested tree is identical for the whole build (depends only
-  // on the collection reference), so compute it once per distinct collection
-  // (collections.all / collections.sortedPosts are stable refs in Eleventy).
-  // sidebar/breadcrumbs/prevnext call the filter 3-4x/page; ~3280 pages with
-  // the old per-call scan => ~10k full scans => >11min stall. Memoize => seconds.
-  // const EleventyNavigationCore = require(...) is declared at module top.
-  eleventyConfig.addFilter("eleventyNavigation", (nodes) => {
-    if (!_navTreeCache.has(nodes)) {
-      if (nodes && Array.isArray(nodes) && nodes.length > 0) {
-        _navTreeCache.set(nodes, EleventyNavigationCore.findNavigationEntries(nodes));
-      }
-    }
-    return _navTreeCache.get(nodes) || [];
-  });
+  // GAF-296 T4: setDataDeepMerge was REMOVED in Eleventy 2.0 (deep data merge is
+  // the default behavior since 2.0; the v1 opt-in call is a v3 boot error).
+  // eleventyConfig.setDataDeepMerge(true);
+  eleventyConfig.addPlugin(eleventyNavigationPlugin);
+  eleventyConfig.addPlugin(rssPlugin);
+  eleventyConfig.addFilter("cdataSafe", (content) =>
+    String(content).split("]]>").join("]]]]><![CDATA[>")
+  );
   eleventyConfig.addFilter("debug", (content) => `${inspect(content)}`);
   // eleventyConfig.addPlugin(eleventyPluginSyntaxHighlighter);
   eleventyConfig.addNunjucksAsyncFilter('fileModifiedDate', fileModifiedDate());
@@ -119,6 +96,17 @@ module.exports = function(eleventyConfig) {
   eleventyConfig.addPassthroughCopy('./src/main.css');
   eleventyConfig.addPassthroughCopy('./src/lib/main.js');
   eleventyConfig.addPassthroughCopy('./src/assets');
+  eleventyConfig.addPassthroughCopy('./src/robots.txt');
+  // GitHub Pages Jekyll guard (GAF-297 hotfix 2): without .nojekyll, GitHub's
+  // Jekyll step silently DROPS every underscore-prefixed output dir — it ate
+  // all 73 content/praxes/**/_index/ pages from the deployed site. The empty
+  // marker file disables Jekyll processing; the Pages deploy pushes built
+  // files verbatim.
+  eleventyConfig.addPassthroughCopy({ './src/nojekyll': '.nojekyll' });
+  // feed consumer (GAF-277 T19) — CI build runs eleventy only (no gulp), so the
+  // feed consumer must passthrough-copy to reach output js/ (object form maps
+  // src/js/feed-consumer.js -> output js/feed-consumer.js; default retains src/).
+  eleventyConfig.addPassthroughCopy({ './src/js/feed-consumer.js': './js/feed-consumer.js' });
 
   // for markdown extensions
   let options = {
@@ -180,6 +168,22 @@ module.exports = function(eleventyConfig) {
 
       return aDate - bDate;
     });
+  });
+
+  // GAF-296 T5b: build the navigation tree ONCE per build instead of calling the
+  // eleventyNavigation filter per page. CPU profile (2026-08-28, 101,100 samples):
+  // findNavigationEntries is O(n^2) in the node array (~3,879 entries via
+  // eleventyComputed), and sidebar/breadcrumbs/prevnext called it on
+  // collections.all for EVERY page = ~87% of total build CPU. The plugin
+  // (1.0.5, latest) has no upstream fix. Eleventy collections are computed once
+  // and cached; navTree holds the exact same structure the filter returned
+  // (findNavigationEntries on collections.all), so template output is unchanged.
+  eleventyConfig.addCollection("navTree", function(collection) {
+    // NOTE: require("@11ty/eleventy-navigation") resolves to the plugin config
+    // function (pkg main = .eleventy.js). The tree builder lives at
+    // .navigation.find — the same findNavigationEntries the plugin registers
+    // as the eleventyNavigation filter. Use the top-level `navigationPlugin`.
+    return navigationPlugin.navigation.find(collection.getAll());
   });
   eleventyConfig.addNunjucksFilter("replaceString", function(value, search, replacement) {
     return value.split(search).join(replacement);
@@ -306,7 +310,7 @@ module.exports = function(eleventyConfig) {
   });
   return {
     metadata: {
-      url: "https://celticpaganism.org", // Your website URL
+      url: "https://openordu.github.io", // Your website URL
     },
     dir: {
       input: "src",

@@ -1,0 +1,34 @@
+---
+eleventyExcludeFromCollections: true
+permalink: /feed.xml
+---
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>{{ metadata.title }}</title>
+  <subtitle>{{ metadata.description }}</subtitle>
+  <link href="{{ site.url }}/feed.xml" rel="self"/>
+  <link href="{{ site.url }}/"/>
+  {# GAF-296 T4: rssLastUpdatedDate/rssDate filters were removed in rss plugin
+     v2 (Eleventy 3 era). Replacement: getNewestCollectionItemDate | dateToRfc3339
+     for the feed-level <updated>, dateToRfc822 for per-entry dates. #}
+  <updated>{% if collections.sortedPosts %}{{ collections.sortedPosts | getNewestCollectionItemDate | dateToRfc3339 }}{% else %}{{ 'now' | dateToRfc3339 }}{% endif %}</updated>
+  <id>{{ site.url }}/</id>
+  <author>
+    <name>{{ metadata.author }}</name>
+    {% if metadata.email %}<email>{{ metadata.email }}</email>{% endif %}
+    {% if metadata.twitter_username %}<uri>https://twitter.com/{{ metadata.twitter_username }}</uri>{% endif %}
+  </author>
+  {% for post in collections.sortedPosts %}
+    {% if post.url and post.data.title %}
+    {% set absolutePostUrl %}{{ site.url }}{{ post.url | url }}{% endset %}
+    <entry>
+      <title>{{ post.data.title }}</title>
+      <link href="{{ absolutePostUrl }}"/>
+      {# GAF-296 T4: rssDate removed in rss plugin v2 → dateToRfc3339 (Atom feed) #}
+      <updated>{{ post.date | dateToRfc3339 }}</updated>
+      <id>{{ absolutePostUrl }}</id>
+      <content type="html"><![CDATA[{{ post.templateContent | htmlToAbsoluteUrls(absolutePostUrl) | cdataSafe }}]]></content>
+    </entry>
+    {% endif %}
+  {% endfor %}
+</feed>

@@ -1,4 +1,4 @@
-{% set navPages = collections.all | eleventyNavigation %}
+{% set navPages = collections.navTree %}
 
 {% macro renderSidebarListItem(entry, sub = 0) -%}
   {% if entry.index != false %}
