@@ -120,5 +120,26 @@
   .align-items-center { align-items: center; }
   .h-100 { height: 100%; }
   .carousel-caption { position: static; }
+  /* GAF-276 T21: caption text must clear the absolutely-positioned 15%-wide
+     side controls instead of sliding under them (exceeds old Bootstrap parity,
+     which had this exact defect). Inset tracks the control width (15% of the
+     item box) plus a small gap, so it clears at every viewport width. */
+  .carousel-item > * { margin-inline: calc(15% + 0.5rem); }
+  /* GAF-276 T21: the controls' .visually-hidden "Previous"/"Next" text is
+     clip-hidden but its glyph boxes still yield ~62px layout range rects that
+     extend over the content column (verify-page reads range rects, not paint).
+     Off-canvas indent moves the glyph boxes out of the content area; the text
+     stays in the DOM and screen-reader order (presentational offset only). */
+  .carousel-control-prev .visually-hidden,
+  .carousel-control-next .visually-hidden { text-indent: -9999px; }
+  /* GAF-276 T21: top-level content blocks beside the floated #headings TOC
+     must not underlap it. Floats only shorten line boxes, so block boxes of
+     loose-list items (li > p) still span under the TOC and read as collisions;
+     BFC siblings narrow beside the float instead (real float-wrapping). */
+  #main > ul, #main > ol, #main > .carousel { display: flow-root; }
+  /* GAF-276 T21: PCE meta row — the clock wrapper and .reading-time are
+     adjacent inline spans with no inter-span margin; give .reading-time an
+     explicit gap + inline-block so its line boxes cannot interleave. */
+  .reading-time { margin-left: 0.75rem; display: inline-block; }
   /*__THEME_SCSS_INLINE__*/
 }

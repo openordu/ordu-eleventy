@@ -135,7 +135,11 @@
     var sel =
       (trigger.dataset && trigger.dataset.bsTarget) ||
       trigger.getAttribute('data-bs-target');
-    var root = sel ? document.querySelector(sel) : trigger.closest('.carousel');
+    // GAF-276 T21: the plugin emits data-bs-target="#carousel-undefined" when
+    // its build-time id variable is undefined — resolve null, then climb to the
+    // enclosing carousel so controls still cycle (exceeds old-site parity).
+    var root = sel ? document.querySelector(sel) : null;
+    if (!root) root = trigger.closest('.carousel');
     if (!root) return;
     var items = root.querySelectorAll('.carousel-item');
     if (!items.length) return;
