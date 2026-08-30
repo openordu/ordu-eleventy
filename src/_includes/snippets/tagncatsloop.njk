@@ -1,6 +1,6 @@
 <div class="grid grid-cols-12">
   {%- for post in posts %}
-    <div class="md:col-span-6 py-3 border-b">
+    <div class="col-span-12 md:col-span-6 py-3 border-b">
       <a href="{{ post.url | url }}" class="link-fancy"><h2 class="text-5xl font-semibold tracking-normal">{{ post.data.title}}</h2></a>
       <p>Published
         <time datetime="{{ post.date | htmlDateString }}">{{ post.date | readableDate }}</time>
