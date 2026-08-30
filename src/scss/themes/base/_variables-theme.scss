@@ -1,12 +1,12 @@
 //This is an example of how you can change BS5 variables. Just add the changed variables here and they will overwrite the defaults.
-// GAF-276 T17: re-pointed to the approved V5 "Animated Atlas" winner
-// (dark peat/bone/gold) — same variable names, new target palette.
-$blue:    #8f6d1e; // V5 gold-deep (was indigo $blue #4343cc)
-$teal:    #6c7a44; // V5 moss (was mint #4abf8a)
-$primary:   #c39a3a !default; // V5 gold
-$secondary: #6c7a44 !default; // V5 moss
-$body-color: #efe7d3 !default; // V5 bone — light body text on peat
-$text-dark: #d8cfb7 !default;  // V5 bone-2 — secondary light tone
+// GAF-308 T6: re-pointed to the Brigid palette (docs/brigid-reskin.md §3)
+// — same variable names, new target colors.
+$blue:    #1f7a53; // deep teal (links)
+$teal:    #1f7a53; // deep teal (anchors, header icons, alert-tip bg, topactive)
+$primary:   #46bd87 !default; // brand teal (logo-locked: icons, link-fancy, quiz chip)
+$secondary: #5c6e64 !default; // mist — muted secondary
+$body-color: #1c1e1c !default; // ink — body text on white
+$text-dark: #5c6e64 !default;  // mist — muted secondary tone
 $font-size-base:  1rem !default; // Assumes the browser default, typically `16px`
 
 $display-font-sizes: (

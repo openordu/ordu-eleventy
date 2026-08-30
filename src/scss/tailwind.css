@@ -10,46 +10,43 @@
    (dropdown-item, topactive, search-container, alert-tip, katex, code-tabs)
    keep working alongside Tailwind utilities. */
 @layer components {
-  /* GAF-276 T17: V5 "Animated Atlas" winner theme — dark peat/bone/gold.
-     Ported from src/preview/variant-5/index.html. Sits ABOVE the theme.scss
-     splice point; SCSS output lands below and may refine these. */
+  /* GAF-308 T5: Brigid theme — white base, ink text, teal accents.
+     Spec: docs/brigid-reskin.md §4. Sits ABOVE the theme.scss splice
+     point; SCSS output lands below and may refine these. */
   html, body {
-    background: #141412;
-    color: #efe7d3;
+    background: #ffffff;
+    color: #1c1e1c;
   }
   body {
     font-family: "Source Serif 4", "Iowan Old Style", Georgia, serif;
     font-feature-settings: "onum", "kern", "liga";
     -webkit-font-smoothing: antialiased;
-    background-image:
-      radial-gradient(ellipse at 15% 5%, rgba(195,154,58,.09), transparent 45%),
-      radial-gradient(ellipse at 85% 92%, rgba(108,122,68,.08), transparent 55%);
   }
-  ::selection { background: rgba(195,154,58,.28); color: #efe7d3; }
+  ::selection { background: rgba(70,189,135,.25); color: #1c1e1c; }
   #progress {
     position: fixed; top: 0; left: 0; height: 3px;
-    background: linear-gradient(90deg, #8f6d1e, #c39a3a, #efe7d3);
+    background: linear-gradient(90deg, #1f7a53, #46bd87);
     width: 0%; z-index: 100; transition: width .05s linear;
-    box-shadow: 0 0 12px rgba(195,154,58,.6);
+    box-shadow: 0 0 12px rgba(70,189,135,.5);
   }
-  #splash-screen { background-color: #141412; }
+  #splash-screen { background-color: #ffffff; }
 
-  .display { font-family: "Cormorant", "Cormorant Garamond", Georgia, serif; font-weight: 500; letter-spacing: -.01em; }
+  .display { font-family: "Cormorant", "Cormorant Garamond", Georgia, serif; font-weight: 500; letter-spacing: 0; }
   .display-i { font-family: "Cormorant", "Cormorant Garamond", Georgia, serif; font-style: italic; font-weight: 500; }
   .mono { font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace; letter-spacing: .02em; }
   .figures { font-variant-numeric: tabular-nums lining-nums; }
   .oldfig { font-variant-numeric: oldstyle-nums tabular-nums; }
-  .rule { background: rgba(239,231,211,.14); height: 1px; }
-  .rule-gold { background: linear-gradient(90deg, transparent 0, #c39a3a 15%, #c39a3a 85%, transparent 100%); height: 1px; }
-  .plate { background: linear-gradient(180deg, #1c1b17 0%, #17161300 100%); box-shadow: 0 30px 60px -40px rgba(0,0,0,.7); }
-  .plate-deep { background: linear-gradient(180deg, #221f19 0%, #16150f 100%); box-shadow: 0 40px 80px -40px rgba(0,0,0,.7); }
-  .btn-primary { background: #c39a3a; color: #141412; }
-  .btn-primary:hover { background: #efe7d3; }
-  .btn-ghost { color: #efe7d3; }
-  .btn-ghost:hover { color: #c39a3a; }
-  .hero-title { font-size: clamp(3.4rem, 10vw, 8rem); line-height: .9; }
-  .gold { color: #c39a3a; }
-  .mist { color: #a9a293; }
+  .rule { background: rgba(28,30,28,.14); height: 1px; }
+  .rule-gold { background: linear-gradient(90deg, transparent 0, #46bd87 15%, #46bd87 85%, transparent 100%); height: 1px; }
+  .plate { background: linear-gradient(180deg, #ffffff 0%, #f4f7f5 100%); box-shadow: 0 30px 60px -40px rgba(28,30,28,.25); }
+  .plate-deep { background: linear-gradient(180deg, #f4f7f5 0%, #eef2ef 100%); box-shadow: 0 40px 80px -40px rgba(28,30,28,.3); }
+  .btn-primary { background: #1f7a53; color: #f2f7f4; }
+  .btn-primary:hover { background: #0f4c33; }
+  .btn-ghost { color: #1f7a53; }
+  .btn-ghost:hover { color: #b52f0d; }
+  .hero-title { font-size: clamp(3.4rem, 10vw, 8rem); line-height: 1.05; letter-spacing: 0; }
+  .gold { color: #46bd87; }
+  .mist { color: #5c6e64; }
   /* GAF-276 T18: hero atlas backdrop — peat-dark left for bone text,
      gold relief plate showing on the right. */
   .atlas-hero-bg {
@@ -71,22 +68,21 @@
   .collapse.show { display: block; }
   /* plugin tips triggers also carry alert-info + btn-link on the <a> */
   .alert-info {
-    color: #a9a293;
-    border-left: 2px solid #6c7a44;
+    color: #5c6e64;
+    border-left: 2px solid #1f7a53;
   }
   .lead { font-size: 1.15rem; }
   /* GAF-276 T20 round 2 — quiz option buttons (markdown-it-quiz emits
      button.btn.btn-outline-primary.list-group-item[-action]). The old
      substrate owned these before; the compat layer owns them now.
-     V5 register: bone outline, gold hover, moss correct-state
-     (colors live in the #quiz block). */
+     Brigid register: mist outline, ink text, deep-teal hover. */
   .btn { cursor: pointer; }
   .btn-outline-primary {
     display: block; width: 100%; text-align: left;
-    background: transparent; border: 1px solid #a9a293; border-radius: .25rem;
-    color: #efe7d3; padding: .5rem .75rem; margin-bottom: .25rem; cursor: pointer;
+    background: transparent; border: 1px solid #5c6e64; border-radius: .25rem;
+    color: #1c1e1c; padding: .5rem .75rem; margin-bottom: .25rem; cursor: pointer;
   }
-  .btn-outline-primary:hover { border-color: #c39a3a; color: #c39a3a; }
+  .btn-outline-primary:hover { border-color: #1f7a53; color: #1f7a53; }
   .list-group-item-action { width: 100%; }
   /* carousel controls (markdown-it-ordu emits them per docs page) */
   .carousel { position: relative; }
@@ -99,13 +95,14 @@
   .carousel-control-next { right: 0; }
   .carousel-control-prev-icon, .carousel-control-next-icon {
     display: inline-block; width: 1.5rem; height: 1.5rem;
-    background-color: #c39a3a; border-radius: 50%;
+    background-color: #46bd87; border-radius: 50%;
   }
   /* GAF-276 T20: alert variants the tips plugins emit (info/danger/warning).
-     V5 register: moss = tip-positive, gold-deep = danger, ochre = warning. */
-  .alert-warning { color: #c39a3a; border-left: 2px solid #c39a3a; }
-  .alert-danger { color: #e06c5a; border-left: 2px solid #b52f0d; }
-  .alert-primary { color: #c39a3a; border-left: 2px solid #c39a3a; }
+     Brigid register: ochre(#46bd87) = tip-positive, crimson = danger,
+     deep-teal = warning/info text. */
+  .alert-warning { color: #1f7a53; border-left: 2px solid #46bd87; }
+  .alert-danger { color: #b52f0d; border-left: 2px solid #b52f0d; }
+  .alert-primary { color: #1f7a53; border-left: 2px solid #46bd87; }
   .visually-hidden {
     position: absolute !important;
     width: 1px; height: 1px;

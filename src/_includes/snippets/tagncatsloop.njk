@@ -1,14 +1,14 @@
 <div class="grid grid-cols-12">
   {%- for post in posts %}
     <div class="md:col-span-6 py-3 border-b">
-      <a href="{{ post.url | url }}" class="link-fancy"><h2 class="text-5xl font-semibold tracking-tight">{{ post.data.title}}</h2></a>
+      <a href="{{ post.url | url }}" class="link-fancy"><h2 class="text-5xl font-semibold tracking-normal">{{ post.data.title}}</h2></a>
       <p>Published
         <time datetime="{{ post.date | htmlDateString }}">{{ post.date | readableDate }}</time>
       </p>
       <p>
       {% for tag in post.data.tags | filterTagList %}
         {% set tagUrl %}/tags/{{ tag | slugit }}/{% endset %}
-        <a href="{{ tagUrl | url }}" class="inline-flex items-center rounded-full px-2 py-0.5 text-xs outlined-pill bg-bone text-peat mr-1 my-1 truncate">
+        <a href="{{ tagUrl | url }}" class="inline-flex items-center rounded-full px-2 py-0.5 text-xs outlined-pill bg-peat text-ink mr-1 my-1 truncate">
           <i class="fas fa-tags text-moss"></i>
           {{ tag }}
         </a>
@@ -29,7 +29,7 @@
     <div class="grid grid-cols-12 justify-between">
       <div class="col-span-6">
         {% if pagination.href.previous %}
-          <a href="{{pagination.href.previous}}" class="inline-flex items-center justify-center rounded border border-moss px-4 py-2 font-semibold text-bone hover:bg-moss hover:text-bone"> <i class="fa-solid fa-arrow-left"></i> Previous Topic</a> {% endif %} </div> <div class="col-span-6 text-right"> {% if pagination.href.next %} <a href="{{pagination.href.next}}" class="inline-flex items-center justify-center rounded border border-moss px-4 py-2 font-semibold text-bone hover:bg-moss hover:text-bone">Next Topic <i class="fa-solid fa-arrow-right"></i></a>
+          <a href="{{pagination.href.previous}}" class="inline-flex items-center justify-center rounded border border-moss px-4 py-2 font-semibold text-ink hover:bg-moss hover:text-bone"> <i class="fa-solid fa-arrow-left"></i> Previous Topic</a> {% endif %} </div> <div class="col-span-6 text-right"> {% if pagination.href.next %} <a href="{{pagination.href.next}}" class="inline-flex items-center justify-center rounded border border-moss px-4 py-2 font-semibold text-ink hover:bg-moss hover:text-bone">Next Topic <i class="fa-solid fa-arrow-right"></i></a>
         {% endif %}
       </div>
     </div>

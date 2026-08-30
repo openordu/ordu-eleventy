@@ -2,7 +2,7 @@
 {% if categories %}
   {% for category in categories %}
     {% if category %}
-      <a class="inline-flex items-center rounded-full px-2 py-0.5 text-xs outlined-pill bg-bone text-peat mr-1 my-1" href="/category/{{category | slugit }}">
+      <a class="inline-flex items-center rounded-full px-2 py-0.5 text-xs outlined-pill bg-peat text-ink mr-1 my-1" href="/category/{{category | slugit }}">
           <i class="fas fa-sitemap text-moss"></i>
           {{category}}
       </a>
@@ -14,7 +14,7 @@
 {% if tags %}
   {% for tag in tags %}
     {% if tag and tag not in ['pce', 'post', 'posts', 'sortedposts', 'taglist', 'categorylist', 'all'] %}
-      <a class="inline-flex items-center rounded-full px-2 py-0.5 text-xs outlined-pill bg-bone text-peat mr-1 my-1" href="/tags/{{tag | slugit }}">
+      <a class="inline-flex items-center rounded-full px-2 py-0.5 text-xs outlined-pill bg-peat text-ink mr-1 my-1" href="/tags/{{tag | slugit }}">
           <i class="fas fa-tags text-moss"></i>
           {{tag}}
       </a>

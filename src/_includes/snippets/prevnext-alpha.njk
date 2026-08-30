@@ -15,11 +15,11 @@
         {% endif %}
       {% endif %}
       {% if prevItem != null %}
-      <a href="{{ prevItem.url | url }}" class="inline-flex items-center justify-center rounded border border-moss px-4 py-2 font-semibold text-bone hover:bg-moss hover:text-bone" role="button">
+      <a href="{{ prevItem.url | url }}" class="inline-flex items-center justify-center rounded border border-moss px-4 py-2 font-semibold text-ink hover:bg-moss hover:text-bone" role="button">
         <i class="fas fa-arrow-left"></i> Prev: {{ prevItem.title if prevItem }}
       </a>
       {% else %}
-      <button class="inline-flex items-center justify-center rounded border border-moss px-4 py-2 font-semibold text-bone hover:bg-moss hover:text-bone" role="button" disabled>
+      <button class="inline-flex items-center justify-center rounded border border-moss px-4 py-2 font-semibold text-ink hover:bg-moss hover:text-bone" role="button" disabled>
         <i class="fas fa-arrow-left"></i> Prev
       </button>
       {% endif %}
@@ -34,11 +34,11 @@
         {% endif %}
       {% endif %}
       {% if nextItem != null %}
-      <a href="{{ nextItem.url | url }}" class="inline-flex items-center justify-center rounded border border-moss px-4 py-2 font-semibold text-bone hover:bg-moss hover:text-bone" role="button">
+      <a href="{{ nextItem.url | url }}" class="inline-flex items-center justify-center rounded border border-moss px-4 py-2 font-semibold text-ink hover:bg-moss hover:text-bone" role="button">
         Next: {{ nextItem.title if nextItem }} <i class="fas fa-arrow-right"></i>
       </a>
       {% else %}
-      <button class="inline-flex items-center justify-center rounded border border-moss px-4 py-2 font-semibold text-bone hover:bg-moss hover:text-bone" role="button" disabled>
+      <button class="inline-flex items-center justify-center rounded border border-moss px-4 py-2 font-semibold text-ink hover:bg-moss hover:text-bone" role="button" disabled>
         Next <i class="fas fa-arrow-right"></i>
       </button>
       {% endif %}

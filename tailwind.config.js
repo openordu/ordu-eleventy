@@ -1,9 +1,10 @@
 /** @type {import('tailwindcss').Config} */
-// GAF-276 openordu-bootstrap-tailwind-design-gauntlet
-// T17: approved V5 "Animated Atlas" winner (deslop 5→3→1). The semantic
-// token names from the T5 scaffold are KEPT so all 224 template color-class
-// instances keep resolving; their hexes are re-pointed to the dark
-// peat/bone/gold atlas (src/preview/variant-5/index.html :root).
+// GAF-308 openordu-brigid-reskin-gauntlet T4: atlas→Brigid re-point.
+// Mechanism (GAF-276 T17 precedent): semantic token NAMES are KEPT so all
+// 224 template color-class instances keep resolving; HEXES re-point to the
+// Brigid palette (docs/brigid-reskin.md §3). Logo teal #46bd87 is LOCKED
+// (brand moments only); text-role teal #1f7a53 (AA 5.29:1 on white);
+// #0f4c33 = deep-teal nav/footer bg; #b52f0d = crimson sparing accent.
 module.exports = {
   content: [
     './src/**/*.njk',
@@ -44,22 +45,24 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        // V5 "Animated Atlas" palette. HARD RULE: no indigo/purple (ban-list
+        // GAF-308 Brigid palette. HARD RULE: no indigo/purple (ban-list
         // colors). Real hexes only. Semantic names retained from the
-        // parchment baseline so existing template classes keep working:
-        ink:    '#efe7d3',   // V5 bone — primary light text
-        paper:  '#141412',   // V5 peat — page background (now dark)
-        moss:   '#6c7a44',   // V5 moss — green accent (borders/CTAs)
-        earth:  '#8f6d1e',   // V5 gold-deep
-        ochre:  '#c39a3a',   // V5 gold — CTA accent
-        peat:   '#1c1b17',   // V5 peat-2 — raised panels/headers
-        mist:   '#a9a293',   // V5 mist — warm grey (borders/muted text)
-        bone:   '#d8cfb7',   // V5 bone-2 — secondary light panels/text
-        // Explicit V5 aliases (T17):
-        gold:      '#c39a3a',
-        'gold-deep': '#8f6d1e',
-        'peat-2':  '#25231e',
-        'peat-3':  '#141412'
+        // V5 baseline so existing template classes keep working
+        // (docs/brigid-reskin.md §3 token map):
+        ink:    '#1c1e1c',   // Brigid ink — body text on white
+        paper:  '#ffffff',   // Brigid paper — page background (now white)
+        moss:   '#1f7a53',   // deep teal — CTA buttons (bg-moss)
+        earth:  '#0f4c33',   // deep-teal nav/footer bg token
+        ochre:  '#46bd87',   // brand teal — accents, badges, brand moments
+        peat:   '#f4f7f5',   // raised panels → light surface
+        mist:   '#5c6e64',   // muted text/borders (5.43:1 on white)
+        bone:   '#f2f7f4',   // light text — DARK zones only (atlas hero, teal footer/nav)
+        // Explicit Brigid aliases (T4):
+        gold:      '#46bd87',
+        'gold-deep': '#1f7a53',
+        'peat-2':  '#eef2ef',
+        'peat-3':  '#ffffff',
+        crimson:   '#b52f0d'   // NEW — sparing accent (hover, one per view)
       },
       fontFamily: {
         // V5 type system: Source Serif 4 body, Cormorant display,
