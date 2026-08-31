@@ -14,49 +14,65 @@
      Spec: docs/brigid-reskin.md §4. Sits ABOVE the theme.scss splice
      point; SCSS output lands below and may refine these. */
   html, body {
-    background: #ffffff;
-    color: #1c1e1c;
+    background: #f7faf9;
+    color: #122019;
   }
   body {
-    font-family: "Source Serif 4", "Iowan Old Style", Georgia, serif;
-    font-feature-settings: "onum", "kern", "liga";
+    font-family: "Source Sans 3", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
     -webkit-font-smoothing: antialiased;
   }
-  ::selection { background: rgba(70,189,135,.25); color: #1c1e1c; }
+  ::selection { background: rgba(70,189,135,.25); color: #122019; }
   #progress {
     position: fixed; top: 0; left: 0; height: 3px;
     background: linear-gradient(90deg, #1f7a53, #46bd87);
     width: 0%; z-index: 100; transition: width .05s linear;
     box-shadow: 0 0 12px rgba(70,189,135,.5);
   }
-  #splash-screen { background-color: #ffffff; }
+  #splash-screen { background-color: #f7faf9; }
 
-  .display { font-family: "Cormorant", "Cormorant Garamond", Georgia, serif; font-weight: 500; letter-spacing: 0; }
-  .display-i { font-family: "Cormorant", "Cormorant Garamond", Georgia, serif; font-style: italic; font-weight: 500; }
+  .display { font-family: "Source Serif 4", "Iowan Old Style", Georgia, serif; font-weight: 600; letter-spacing: -.01em; }
+  .display-i { font-family: "Source Serif 4", "Iowan Old Style", Georgia, serif; font-style: italic; font-weight: 600; }
   .mono { font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace; letter-spacing: .02em; }
   .figures { font-variant-numeric: tabular-nums lining-nums; }
   .oldfig { font-variant-numeric: oldstyle-nums tabular-nums; }
-  .rule { background: rgba(28,30,28,.14); height: 1px; }
+  .rule { background: rgba(18,32,25,.14); height: 1px; }
   .rule-gold { background: linear-gradient(90deg, transparent 0, #46bd87 15%, #46bd87 85%, transparent 100%); height: 1px; }
-  .plate { background: linear-gradient(180deg, #ffffff 0%, #f4f7f5 100%); box-shadow: 0 30px 60px -40px rgba(28,30,28,.25); }
-  .plate-deep { background: linear-gradient(180deg, #f4f7f5 0%, #eef2ef 100%); box-shadow: 0 40px 80px -40px rgba(28,30,28,.3); }
-  .btn-primary { background: #1f7a53; color: #f2f7f4; }
-  .btn-primary:hover { background: #0f4c33; }
-  .btn-ghost { color: #1f7a53; }
-  .btn-ghost:hover { color: #b52f0d; }
-  .hero-title { font-size: clamp(3.4rem, 10vw, 8rem); line-height: 1.05; letter-spacing: 0; }
-  .gold { color: #46bd87; }
-  .mist { color: #5c6e64; }
-  /* GAF-276 T18: hero atlas backdrop — peat-dark left for bone text,
-     gold relief plate showing on the right. */
-  .atlas-hero-bg {
-    background-image:
-      linear-gradient(90deg, rgba(20, 20, 18, 0.93) 0%, rgba(20, 20, 18, 0.6) 45%, rgba(20, 20, 18, 0.18) 100%),
-      url('/assets/hero-atlas.png');
-    background-size: cover;
-    background-position: right center;
-    background-repeat: no-repeat;
+  .plate { background: linear-gradient(180deg, #ffffff 0%, #f7faf9 100%); box-shadow: 0 30px 60px -40px rgba(18,32,25,.25); }
+  .plate-deep { background: linear-gradient(180deg, #f7faf9 0%, #eef4f2 100%); box-shadow: 0 40px 80px -40px rgba(18,32,25,.3); }
+  /* GAF-313 T2c: V2b pills — teal gradient CTA (mock .btn-primary), deep-ink
+     ghost on soft teal wash. Geometry (radius/padding) comes from template
+     utilities; this layer owns color only. */
+  .btn-primary {
+    background: linear-gradient(100deg, #1f7a53, #46bd87);
+    color: #f2fbf7;
+    box-shadow: 0 10px 30px -12px rgba(70,189,135,.55);
   }
+  .btn-primary:hover { background: linear-gradient(100deg, #0f4c33, #1f7a53); }
+  .btn-ghost { color: #0f4c33; background: rgba(15,76,51,.06); }
+  .btn-ghost:hover { background: rgba(15,76,51,.1); color: #0f4c33; }
+  .gold { color: #46bd87; }
+  .mist { color: #3f554c; }
+  /* GAF-313 T2c: V2b editorial components (docs/v2b-reskin.md §3). Mono
+     eyebrow kicker, PCE dashboard panel (white card, deep-teal soft shadow),
+     pure-CSS chart bar geometry + teal gradient variants, panel dots.
+     Mock: /tmp/openordu-deslop/v2b-editorial-panel.html. */
+  .eyebrow {
+    font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+    font-size: 11px;
+    letter-spacing: .2em;
+    text-transform: uppercase;
+    color: #6b7f76;
+  }
+  .pce-panel {
+    background: #fffdf8;
+    border-radius: 18px;
+    padding: 24px;
+    box-shadow: 0 1px 2px rgba(18,32,25,.05), 0 24px 56px -28px rgba(15,76,51,.28);
+  }
+  .pce-dot { width: 8px; height: 8px; border-radius: 50%; display: block; }
+  .pce-bar { flex: 1; border-radius: 6px 6px 0 0; display: block; }
+  .pce-bar-teal-2 { background: linear-gradient(180deg, #46bd87, rgba(70,189,135,.25)); }
+  .pce-bar-teal { background: linear-gradient(180deg, #1f7a53, rgba(31,122,83,.25)); }
   /* GAF-276 T20: content-layer plugin compat. markdown-it-ordu / quiz /
      tips are unmodifiable scope-locked plugins that emit this
      markup from .md content. The old framework owned their show/hide + carousel
@@ -68,7 +84,7 @@
   .collapse.show { display: block; }
   /* plugin tips triggers also carry alert-info + btn-link on the <a> */
   .alert-info {
-    color: #5c6e64;
+    color: #3f554c;
     border-left: 2px solid #1f7a53;
   }
   .lead { font-size: 1.15rem; }
@@ -79,8 +95,8 @@
   .btn { cursor: pointer; }
   .btn-outline-primary {
     display: block; width: 100%; text-align: left;
-    background: transparent; border: 1px solid #5c6e64; border-radius: .25rem;
-    color: #1c1e1c; padding: .5rem .75rem; margin-bottom: .25rem; cursor: pointer;
+    background: transparent; border: 1px solid #3f554c; border-radius: .25rem;
+    color: #122019; padding: .5rem .75rem; margin-bottom: .25rem; cursor: pointer;
   }
   .btn-outline-primary:hover { border-color: #1f7a53; color: #1f7a53; }
   .list-group-item-action { width: 100%; }
