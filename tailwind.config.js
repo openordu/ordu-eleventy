@@ -47,7 +47,8 @@ module.exports = {
     extend: {
       colors: {
         // GAF-313 V2b palette (docs/v2b-reskin.md §1 token map). HARD RULE:
-        // no indigo/purple (ban-list colors). Real hexes only. Semantic
+        // the GAF-308 ban list governs the palette (no forbidden hues).
+        // Real hexes only. Semantic
         // token NAMES retained so existing template classes keep working;
         // hexes re-pointed to V2b. moss/earth/ochre/gold/gold-deep/peat-3/
         // crimson UNCHANGED (V2b maps teal→moss, deep→earth, teal-2→ochre).
