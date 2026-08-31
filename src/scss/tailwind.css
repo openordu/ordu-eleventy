@@ -73,6 +73,15 @@
   .pce-bar { flex: 1; border-radius: 6px 6px 0 0; display: block; }
   .pce-bar-teal-2 { background: linear-gradient(180deg, #46bd87, rgba(70,189,135,.25)); }
   .pce-bar-teal { background: linear-gradient(180deg, #1f7a53, rgba(31,122,83,.25)); }
+  /* GAF-313 T3: panel label register — mono furniture inside the PCE panel
+     (window-dots caption, chart caption, legend). Distinct from .eyebrow's
+     .2em tracking; the mock labels run .14em at 10-11px. */
+  .pce-label {
+    font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    color: #6b7f76;
+  }
   /* GAF-276 T20: content-layer plugin compat. markdown-it-ordu / quiz /
      tips are unmodifiable scope-locked plugins that emit this
      markup from .md content. The old framework owned their show/hide + carousel
